@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+xmlns:task="http://www.springframework.org/schema/task"  
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+    
+    <description>Spring MVC Configuration dev</description>
+    
+    <!-- 闁告梻濮惧ù鍥煀瀹ュ洨鏋傞悘鐐靛仦閿熺獤鍕�ù鐙呮嫹 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties" />
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/environment.properties" />
+	
+	<!-- 濞达綀娉曢弫顥notation闁煎浜滄慨鈺佲枖閵娿儱鏂�Bean,闁告瑯浜濇竟鍌炲箵瀵ゅ挵ontroller -->
+ 	 <context:component-scan base-package="com"><!-- base-package 濠碘�冲�归悘澶嬪緞濮橆偊鍤嬮柨娑樼灱閺併倝鍨鹃敓锟�,闁炽儲绻傞崹搴ㄦ⒕閿燂拷 -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>  
+	
+	<!-- 閻犱礁澧介悿鍡欐嫚闁垮婀撮柡鍕Т閻ㄧ姷绱撻弽顐ゅ灣闁挎稑鐭佽闁告劗鐓esponseBody濞戞棁浜悥婊堟⒒椤曪拷椤ｏ拷 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/plain;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
+	<!--  闁告凹鍨版慨鈺佲枖閵娿剱锟�,濮掓稒顭堥濠氭儍閸曨剚鏆堥悷娆欑稻濡惭呬焊閸曨厽鐣遍柡锟介娑樼槷闁挎稑顔坮g.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping -->
+	<mvc:annotation-driven/>
+
+	<!-- 閻庨潧缍婂銈夊箑娴ｇ晫銈繝褎鍔栭弸鍐╃閸撲焦鐣遍悹浣告健濡爼鏁嶉敓锟� 閻忓繐妫欏Λ銈呪枖閺勭pping闁告帞妾瞣ntroller闁汇劌鍩th濞存嚎鍊楃划鐧瞖fault servlet handler濠㈣泛瀚幃锟� -->
+	<mvc:default-servlet-handler/>
+
+
+
+
+	<!-- 閻庤鐭粻鐔煎籍閻曟獣ntroller闁汇劌鍩th<->view闁烩晛鐡ㄧ敮鎾及閻樿尙娈� -->
+	<mvc:view-controller path="/" view-name="redirect:${web.view.index}"/>
+	<mvc:interceptors>
+		<mvc:interceptor>
+	        	<mvc:mapping path="/**"/>  
+				<bean class="com.mytest.interceptor.AuthenticationInterceptor">
+					<!-- <property name="excludedUrls">  
+						<list>  
+							<value>/</value>
+						</list>  
+					</property> 
+					<property name="authorityUrls">  
+						<list>  
+							<value>/</value>
+						</list>  
+					</property>  -->
+					
+					<property name="excludedUrls">
+						<list>
+							<value>/dologin</value>
+							<value>/dologins</value>
+							<value>/login</value>
+						</list>
+				</property>
+				
+				</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	
+
+	<!-- 閻熸瑥妫楀ù姗�寮崶锔筋偨閻熸瑱绲鹃悗浠嬫煀瀹ュ洨鏋� -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="${web.view.prefix}"/>
+		<property name="suffix" value="${web.view.suffix}"/>
+	</bean>
+	
+	<!-- 閻庤鐭粻鐔煎籍閻曟獣ntroller闁汇劌鍩th<->view闁烩晛鐡ㄧ敮鎾及閻樿尙娈� -->
+	<mvc:view-controller path="/" view-name="redirect:${web.view.index}"/>
+
+	
+	<!-- 闂傚牊鐟﹂敓鎴掔劍閺嬪啯绂掔拋鍦css闁靛棔姹瀞闁靛棔宸﹎ages闁挎稑顦甸崢銈囩磾椤旇崵鐟濈紓浣哥箺缁诲儊ispatchServelet濠㈣泛瀚幃锟� 
+	<mvc:resources location="/resources/" mapping="/resources/**" />
+	-->
+	
+	<!-- 濞戞挸锕ｇ槐鍫曞棘閸ワ附顐介柟鍑ら檮閸╁懘鏁嶅畝鍐惧晭缂傚喚鍠楀〒鑸靛緞瑜岀粭鍌涘閻樿櫕鐎ù鐘烘硾閵囧洨浜搁敓锟�   10M=10*1024*1024(B)=10485760 bytes -->  
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <property name="maxUploadSize" value="10485760" />  
+    </bean>
+    
+	<!-- 鐎殿喖鍊搁悥鍓佹喆閿濆棛锟戒粙宕抽敓锟� -->
+	<bean id="simpleMappingExceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<!-- 闁哄倽顫夌涵鑸电▔瀹ュ棙鏆滈柟闀愮窔閺佸﹦鎷犻敓锟� -->
+				<prop
+					key="org.springframework.web.HttpRequestMethodNotSupportedException">common/500</prop>
+			</props>
+		</property>
+	</bean>
+	<task:annotation-driven /> <!-- 閻庤纰嶅鍌炲闯閵娿儳纾婚柛蹇ユ嫹-->  
+</beans>
