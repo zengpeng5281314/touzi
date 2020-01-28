@@ -2,7 +2,6 @@ package com.mytest.admin.po;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,29 +17,30 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "t_channle_xz_info")
+@Table(name = "t_regist_user_info")
 @BeanMeta
 @Getter
 @Setter
-public class TChannleXZInfoPo extends MBeanBase implements Serializable {
-	private static final long serialVersionUID = -3393641294306938691L;
+public class TRegistUserInfoPo extends MBeanBase implements Serializable {
+
+	private static final long serialVersionUID = 3540277290317901011L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name="user_id")
-	private long userId;
-	@Column(name="channel_id")
-	private long channelId;
-	@Column(name="regist_num")
-	private int registNum;//
-	@Column(name="applicants_num")
-	private int applicantsNum;//
-	@Column(name="loan_num")
-	private int loanNum;//
-	@Column(name="ctime")
-	private Date ctime;
-	@Column(name="source")
-	private int source;
+	@Column(name="name")
+	private String name;
+	@Column(name="channel_name")
+	private String channelName;
+	@Column(name="phone")
+	private String phone;
+	@Column(name="total_money")
+	private double total_money;
+	@Column(name="over_money")
+	private double over_money;
+	@Column(name="regist_time")
+	private Timestamp registTime;
+	@Column(name="login_time")
+	private Timestamp loginTime;
 	@Column(name="createtime")
 	private Timestamp createTime;
 	@Column(name="updatetime")

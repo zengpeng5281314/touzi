@@ -406,20 +406,29 @@ public class AHttpClient {
 public static void main(String[] args) throws Exception {
         
         AHttpClient httpClient = new AHttpClient();
+        List<ParamPair> list = new ArrayList<ParamPair>();
+        list.add(new ParamPair("username","taojin"));
+        list.add(new ParamPair("password","qwer.123456"));
+        String httpresult = httpClient.doHttpPostRequest("https://api.dsxzt.com/admin/v1/login", list);
         
         
-        List<StringPart> stringPartList = new ArrayList<StringPart>();
-        stringPartList.add(new StringPart("type","2"));
-        stringPartList.add(new StringPart("isqianbao","1"));
-        String path ="E://es.png";
+        
+//        List<StringPart> stringPartList = new ArrayList<StringPart>();
+//        stringPartList.add(new StringPart("username","taojin"));
+//        stringPartList.add(new StringPart("password","qwer.123456"));
+//        
+//        String httpresult = httpClient.doHttpPostRequest("http://12.0.0.200:8091/caif-web/debitcard/updateCurrentCard", stringPartList);
+        
+        
+        //String path ="E://es.png";
 
-        Part part =   new FilePart("qqfile", new File(path));
+        //Part part =   new FilePart("qqfile", new File(path));
 
-        stringPartList.add(new StringPart("token","ktrBu1gafo4oOfSqQt4W+EoX29ag7IHyfRO0yM/Y2oFW0MFL3hSbjHvBKB+bBGjb5mKsP2vN9bAji5i1n0f9ysm73hFNy5x17UkY/ywL5b5lsxmJgC6HmkTmxQUOsZDs"));
+        //stringPartList.add(new StringPart("token","ktrBu1gafo4oOfSqQt4W+EoX29ag7IHyfRO0yM/Y2oFW0MFL3hSbjHvBKB+bBGjb5mKsP2vN9bAji5i1n0f9ysm73hFNy5x17UkY/ywL5b5lsxmJgC6HmkTmxQUOsZDs"));
         
         //String httpresult = httpClient.doHttpPostRequest("http://12.0.0.200:8091/caif-web/debitcard/updateCurrentCard", stringPartList);
         //String httpresult = httpClient.doHttpPostRequest("http://api3.51kahui.com/kahui3-api-web/baseData/advertisement", stringPartList);
-       String httpresult = httpClient.doHttpPostFile("http://up3.51kahui.com/kahui3-upload-web/service/upload",part, stringPartList);
+//       String httpresult = httpClient.doHttpPostFile("http://up3.51kahui.com/kahui3-upload-web/service/upload",part, stringPartList);
      System.out.println(httpresult);
     }
 }

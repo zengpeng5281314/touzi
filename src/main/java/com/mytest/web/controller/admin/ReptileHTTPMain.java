@@ -41,9 +41,9 @@ public class ReptileHTTPMain {
 
 	public static void main(String[] args) {
 
-		//doGet("http://whfq.hsxia.cn/business/login");
+		doGet("http://h5.dsx.wanxinkj.com/dev/manageh5/index.html#/");
 		try {
-			testJSFile();
+//			testJSFile();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

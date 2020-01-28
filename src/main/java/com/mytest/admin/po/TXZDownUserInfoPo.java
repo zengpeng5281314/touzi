@@ -17,7 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "t_xz_down_user")
+@Table(name = "t_down_user")
 @BeanMeta
 @Getter
 @Setter
