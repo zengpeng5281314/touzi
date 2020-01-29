@@ -1,4 +1,4 @@
-package com.mytest.web.controller.touziT;
+package com.mytest.web.controller.touzi;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

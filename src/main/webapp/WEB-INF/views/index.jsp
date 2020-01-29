@@ -44,27 +44,23 @@
                         <div class="logo-element" title="Credit System Manager">CSM</div>
                     </li>
                     <li>
-                        <a href="${path}/qrcode" class="J_menuItem">
+                        <a href="${path}/tz/first" class="J_menuItem">
                             <i class="fa fa-th-large"></i>
-                            <span class="nav-label">系统版本</span>
+                            <span class="nav-label">首页</span>
                         </a>
                     </li>
-					<li>
-					    <a href="#">
-					        <i class="fa fa-link"></i>
-					        <span class="nav-label">渠道管理</span>
-					        <span class="fa arrow"></span>
-					
-					    </a>
-					    <ul class="nav nav-second-level">
-					        <li>
-					            <a class="J_menuItem" href="${path}/channeldetailed/channel">
-					                <i class="fa fa-handshake-o"></i>子链接管理
-					            </a>
-					        </li>
-					    </ul>
-					</li>
-
+                     <li>
+                        <a href="${path}/qrcode" class="J_menuItem">
+                            <i class="fa fa-th-large"></i>
+                            <span class="nav-label">会员列表</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="${path}/qrcode" class="J_menuItem">
+                            <i class="fa fa-handshake-o"></i>
+                            <span class="nav-label">历史数据</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -79,7 +75,7 @@
                 <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i></button>
                 <nav class="page-tabs J_menuTabs">
                     <div class="page-tabs-content">
-                        <a href="javascript:;" class="active J_menuTab" data-id="${path}/qrcode">首页</a>
+                        <a href="javascript:;" class="active J_menuTab" data-id="${path}/tz/first">首页</a>
                     </div>
                 </nav>
                 <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i></button>
@@ -95,7 +91,7 @@
                 <a href="${path}/signout" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i>退出</a>
             </div>
             <div class="row J_mainContent" id="content-main">
-                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${path}/qrcode" frameborder="0" data-id="${path}/qrcode" seamless></iframe>
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${path}/tz/first" frameborder="0" data-id="${path}/tz/first" seamless></iframe>
             </div>
             <div class="footer">
                 <div class="pull-right">&copy; 2017-2017 <a href="/" target="_blank">Chemers</a>
