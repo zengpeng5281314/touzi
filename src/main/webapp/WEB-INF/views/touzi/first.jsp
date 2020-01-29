@@ -116,9 +116,9 @@
 </head>
 <body>
 <div id="app">
-    <div class="search-wrap">
+    <div class="search-wrap" style="margin-bottom:0px">
 	        <input class="date" id="date" placeholder="请选择开始时间"/>
-	        <input class="date" id="enddate" placeholder="请选择结束时间"/>
+	        <input class="date" id="endDate" placeholder="请选择结束时间"/>
 	        <div class="search" id ="search" onclick="search()">搜索</div>
     </div><!-- 
         <a class="back-btn" href="javascript:history.go(-1)">返回</a> -->
@@ -171,8 +171,8 @@
 <script>
 	function search(){
 		var date = $("#date").val();
-		var enddate = $("#enddate").val();
-		window.location.href ="/tz/first?startTime="+date+"&endTime="+enddate;
+		var endDate = $("#endDate").val();
+		window.location.href ="/tz/first?startTime="+date+"&endTime="+endDate;
 		
 		 /* $.ajax({
  			type : "POST",
@@ -211,6 +211,18 @@
                     }
                 }
                 laydate(start);
+              //日期范围限制
+                var end = {
+                    elem: '#endDate',
+                    format: 'YYYY-MM-DD',
+                    max: '2099-06-16 23:59:59', //最大日期
+                    istime: true,
+                    istoday: false,
+                    choose: function (datas) {
+                        _this.date = datas;
+                    }
+                }
+                laydate(end);
             }, 20)
             //this._getData()
         },

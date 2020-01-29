@@ -116,42 +116,35 @@
 </head>
 <body>
 <div id="app">
-    <div class="search-wrap">
-	        <input class="date" id="date" placeholder="请选择时间"/>
+    <div class="search-wrap"  style="margin-bottom:0px">
+	        <input class="date" id="date" placeholder="请选择开始时间"/>
+	        <input class="date" id="endDate" placeholder="请选择结束时间"/>
 	        <div class="search" id ="search" onclick="search()">搜索</div>
     </div>
-        <a class="back-btn" href="javascript:history.go(-1)">返回</a>
-
         <div class="datalist-wrap">
             <table class="list-table">
                 <thead>
                 <tr>
-                    <th>时间</th>
-                    <th>PV点击率</th>
+                    <th>现金交易人数</th>
+                    <th>首充金额</th>
+                    <th>首充人数</th>
+                    <th>首充率</th>
                     <th>注册人数</th>
-                    <th>完成认证人数</th>
-                    <th>通过人数</th>
-                    <th>放款人数</th>
-                    <th>转换率</th>
-                    <th>首逾率</th>
-                    <th>操作</th>
+                    <th>用券率</th>
+                    <th>用券人数</th>
                 </tr>
                 </thead>
                 <div>
                     <tbody>
-                    <c:forEach items="${list}" var="item">
 	                    <tr>
-		                    <td>${item.createTime}</td>
-	                        <td>${item.clickNum}</td>
-	                        <td>${item.registNum}</td>
-	                        <td>${item.certificationNum}</td>
-	                        <td>${item.passNum}</td>
-	                        <td>${item.loanNum}</td>
-	                        <td>${item.conversionRate}%</td>
-	                        <td>${item.overdueRate}%</td>
-	                        <td><a class="details" href="">详细</a></td>
+		                    <td>${historyDTO.moneyRechargeNum}</td>
+	                        <td>${historyDTO.fristMoney}</td>
+	                        <td>${historyDTO.fristNum}</td>
+	                        <td>${historyDTO.fristRechargeRate}</td>
+	                        <td>${historyDTO.regiestNum}</td>
+	                        <td>${historyDTO.useTicktRate}</td>
+	                        <td>${historyDTO.useTicktNum}</td>
 	                    </tr>
-                    </c:forEach>
                     </tbody>
                 </div>
             </table>
@@ -169,7 +162,8 @@
 <script>
 	function search(){
 		var date = $("#date").val();
-		window.location.href ="/channeldetailed/view?startTime="+date+"&endTime="+date;
+		var endDate = $("#endDate").val();
+		window.location.href ="/channeldetailed/view?startTime="+date+"&endTime="+endDate;
 		
 		 /* $.ajax({
  			type : "POST",
@@ -208,6 +202,17 @@
                     }
                 }
                 laydate(start);
+                var end = {
+                        elem: '#endDate',
+                        format: 'YYYY-MM-DD',
+                        max: '2099-06-16 23:59:59', //最大日期
+                        istime: true,
+                        istoday: false,
+                        choose: function (datas) {
+                            _this.date = datas;
+                        }
+                    }
+                    laydate(end);
             }, 20)
             //this._getData()
         },

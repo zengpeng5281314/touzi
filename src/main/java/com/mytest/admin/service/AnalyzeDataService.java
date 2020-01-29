@@ -131,7 +131,7 @@ public class AnalyzeDataService {
 			registUserInfoPo.setChannelName(regChannel);
 			registUserInfoPo.setLoginTime(Timestamp.valueOf(lastLoginTime));
 			registUserInfoPo.setName(username);
-			registUserInfoPo.setOver_money(Double.valueOf(balance));
+			registUserInfoPo.setOverMoney(Double.valueOf(balance));
 			registUserInfoPo.setRegistTime(Timestamp.valueOf(createTime));
 			registUserInfoPo.setStatus(1);
 			registUserInfoPo.setTotal_money(totalRechargeMoney);

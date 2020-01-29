@@ -116,40 +116,33 @@
 </head>
 <body>
 <div id="app">
-    <div class="search-wrap">
-	        <input class="date" id="date" placeholder="请选择时间"/>
+    <div class="search-wrap" style="margin-bottom:0px">
+	        <input class="date" id="date" placeholder="请选择开始时间"/>
+	        <input class="date" id="endDate" placeholder="请选择结束时间"/>
 	        <div class="search" id ="search" onclick="search()">搜索</div>
     </div>
-        <a class="back-btn" href="javascript:history.go(-1)">返回</a>
-
         <div class="datalist-wrap">
             <table class="list-table">
                 <thead>
                 <tr>
-                    <th>时间</th>
-                    <th>PV点击率</th>
-                    <th>注册人数</th>
-                    <th>完成认证人数</th>
-                    <th>通过人数</th>
-                    <th>放款人数</th>
-                    <th>转换率</th>
-                    <th>首逾率</th>
-                    <th>操作</th>
+                    <th>姓名</th>
+                    <th>手机号</th>
+                    <th>注册渠道</th>
+                    <th>余额</th>
+                    <th>注册时间</th>
+                    <th>最后登录</th>
                 </tr>
                 </thead>
                 <div>
                     <tbody>
-                    <c:forEach items="${list}" var="item">
+                    <c:forEach items="${registInfoList}" var="item">
 	                    <tr>
-		                    <td>${item.createTime}</td>
-	                        <td>${item.clickNum}</td>
-	                        <td>${item.registNum}</td>
-	                        <td>${item.certificationNum}</td>
-	                        <td>${item.passNum}</td>
-	                        <td>${item.loanNum}</td>
-	                        <td>${item.conversionRate}%</td>
-	                        <td>${item.overdueRate}%</td>
-	                        <td><a class="details" href="">详细</a></td>
+		                    <td>${item.name}</td>
+	                        <td>${item.phone}</td>
+	                        <td>${item.channelName}</td>
+	                        <td>${item.overMoney}</td>
+	                        <td>${item.registTime}</td>
+	                        <td>${item.loginTime}</td>
 	                    </tr>
                     </c:forEach>
                     </tbody>
@@ -160,6 +153,23 @@
 	                <div class="none-data">暂无数据!</div>
 	            </div>
             </c:if>
+             <div class="layui-card-body ">
+                 <div class="page" style="float: right;">
+                     <div>
+                     	<a class="num" href="/tz/regist?currentPage=${beforePage}&startTime=${startTime}&endTime=${endTime}">上一页</a>
+                     	<a class="num" href="/tz/regist?currentPage=${nextPage}&startTime=${startTime}&endTime=${endTime}">下一页</a>
+                     	当前第${currentPage}页
+                     	共${total}条
+                         <!-- <a class="prev" href="">&lt;&lt;</a>
+                         <a class="num" href="">1</a>
+                         <span class="current">2</span>
+                         <a class="num" href="">3</a>
+                         <a class="num" href="">489</a>
+                         <a class="next" href="">&gt;&gt;</a> -->
+                      </div>
+                 </div>
+             </div>
+                        
         </div>
 
 </div>
@@ -169,7 +179,8 @@
 <script>
 	function search(){
 		var date = $("#date").val();
-		window.location.href ="/channeldetailed/view?startTime="+date+"&endTime="+date;
+		var endDate = $("#endDate").val();
+		window.location.href ="/tz/regist?startTime="+date+"&endTime="+endDate;
 		
 		 /* $.ajax({
  			type : "POST",
@@ -208,6 +219,18 @@
                     }
                 }
                 laydate(start);
+              //日期范围限制
+                var end = {
+                    elem: '#endDate',
+                    format: 'YYYY-MM-DD',
+                    max: '2099-06-16 23:59:59', //最大日期
+                    istime: true,
+                    istoday: false,
+                    choose: function (datas) {
+                        _this.date = datas;
+                    }
+                }
+                laydate(end);
             }, 20)
             //this._getData()
         },

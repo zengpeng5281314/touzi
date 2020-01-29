@@ -50,13 +50,13 @@
                         </a>
                     </li>
                      <li>
-                        <a href="${path}/qrcode" class="J_menuItem">
+                        <a href="${path}/tz/regist" class="J_menuItem">
                             <i class="fa fa-th-large"></i>
                             <span class="nav-label">会员列表</span>
                         </a>
                     </li>
                      <li>
-                        <a href="${path}/qrcode" class="J_menuItem">
+                        <a href="${path}/tz/history" class="J_menuItem">
                             <i class="fa fa-handshake-o"></i>
                             <span class="nav-label">历史数据</span>
                         </a>

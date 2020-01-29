@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.mytest.admin.dto.HistoryDTO;
 import com.mytest.admin.po.TFirstInfoPo;
 import com.mytest.admin.po.THistoryInfoPo;
 import com.mytest.admin.po.TRegistUserInfoPo;
@@ -62,7 +63,7 @@ public class TZMainController extends BaseController {
 			@RequestParam(defaultValue = "50", required = false, value = "pageSize") int pageSize,
 			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
 		TUserInfoPo userInfoPo = (TUserInfoPo) request.getAttribute("adminInfo");
-		//userId = userInfoPo.getId();
+		// userId = userInfoPo.getId();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Timestamp startT = null;
 		Timestamp endT = null;
@@ -96,17 +97,16 @@ public class TZMainController extends BaseController {
 		return new ModelAndView("/touzi/first", model);
 	}
 
-	
 	@RequestMapping("/regist")
 	@Transactional
 	public ModelAndView regist(@RequestParam(defaultValue = "0", required = false, value = "userId") long userId,
 			@RequestParam(defaultValue = "", required = false, value = "startTime") String startTime,
 			@RequestParam(defaultValue = "", required = false, value = "endTime") String endTime,
 			@RequestParam(defaultValue = "1", required = false, value = "currentPage") int currentPage,
-			@RequestParam(defaultValue = "50", required = false, value = "pageSize") int pageSize,
+			@RequestParam(defaultValue = "10", required = false, value = "pageSize") int pageSize,
 			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
 		TUserInfoPo userInfoPo = (TUserInfoPo) request.getAttribute("adminInfo");
-		//userId = userInfoPo.getId();
+		// userId = userInfoPo.getId();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Timestamp startT = null;
 		Timestamp endT = null;
@@ -120,22 +120,27 @@ public class TZMainController extends BaseController {
 		Page pageList = registInfoService.pageRegistInfoInfoPo(startT, endT, page);
 		List<TRegistUserInfoPo> list = (List<TRegistUserInfoPo>) pageList.getList();
 		JsonConfig jsonConfig = new JsonConfig();
-		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
+		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd HH:mm:ss"));
 		model.put("registInfoList", JSONArray.fromObject(list, jsonConfig));
-		model.put("total",pageList.getTotal());
-		return new ModelAndView("/touzi/first", model);
+		model.put("total", pageList.getTotal());
+		model.put("currentPage", currentPage);
+		model.put("beforePage", currentPage <= 1 ? 1 : currentPage - 1);
+		model.put("nextPage", pageList.getPagecount() > currentPage ? currentPage + 1 : currentPage);
+		model.put("startTime", startT);
+		model.put("endTime", endT);
+		return new ModelAndView("/touzi/registlist", model);
 	}
-	
+
 	@RequestMapping("/history")
 	@Transactional
 	public ModelAndView history(@RequestParam(defaultValue = "0", required = false, value = "userId") long userId,
 			@RequestParam(defaultValue = "", required = false, value = "startTime") String startTime,
 			@RequestParam(defaultValue = "", required = false, value = "endTime") String endTime,
 			@RequestParam(defaultValue = "1", required = false, value = "currentPage") int currentPage,
-			@RequestParam(defaultValue = "50", required = false, value = "pageSize") int pageSize,
+			@RequestParam(defaultValue = "10", required = false, value = "pageSize") int pageSize,
 			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
 		TUserInfoPo userInfoPo = (TUserInfoPo) request.getAttribute("adminInfo");
-		//userId = userInfoPo.getId();
+		// userId = userInfoPo.getId();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Timestamp startT = null;
 		Timestamp endT = null;
@@ -146,15 +151,22 @@ public class TZMainController extends BaseController {
 			endT = new Timestamp(sdf.parse(endTime).getTime());
 		}
 		Page page = new Page(currentPage, pageSize);
-
 		Page pageList = historyInfoService.pageHistoryInfoInfoPo(startT, endT, page);
 		List<THistoryInfoPo> list = (List<THistoryInfoPo>) pageList.getList();
-		
+		HistoryDTO historyDTO = new HistoryDTO();
+		for (THistoryInfoPo tHistoryInfoPo : list) {
+			historyDTO.setFristMoney(Arith.add(historyDTO.getFristMoney(), tHistoryInfoPo.getFristMoney()));
+			historyDTO.setFristNum(historyDTO.getFristNum() + tHistoryInfoPo.getFristNum());
+			historyDTO.setMoneyRechargeNum(historyDTO.getMoneyRechargeNum() + tHistoryInfoPo.getMoneyRechargeNum());
+			historyDTO.setRegiestNum(historyDTO.getRegiestNum() + tHistoryInfoPo.getRegiestNum());
+			historyDTO.setUseTicktNum(historyDTO.getUseTicktNum() + tHistoryInfoPo.getUseTicktNum());
+		}
+		historyDTO.updateRate();
+
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
-		model.put("historyInfoPoList", JSONObject.fromObject(list, jsonConfig));
-		model.put("tatol", pageList.getTotal());
-		return new ModelAndView("/touzi/first", model);
+		model.put("historyDTO", JSONObject.fromObject(historyDTO, jsonConfig));
+		return new ModelAndView("/touzi/historylist", model);
 	}
-	
+
 }

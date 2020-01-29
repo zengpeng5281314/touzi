@@ -36,7 +36,7 @@ public class TRegistUserInfoPo extends MBeanBase implements Serializable {
 	@Column(name="total_money")
 	private double total_money;
 	@Column(name="over_money")
-	private double over_money;
+	private double overMoney;
 	@Column(name="regist_time")
 	private Timestamp registTime;
 	@Column(name="login_time")
