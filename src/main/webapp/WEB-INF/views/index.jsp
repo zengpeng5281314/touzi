@@ -49,16 +49,28 @@
                             <span class="nav-label">首页</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="${path}/tz/admin/first" class="J_menuItem">
+                            <i class="fa fa-th-large"></i>
+                            <span class="nav-label">后台首页</span>
+                        </a>
+                    </li>
                      <li>
                         <a href="${path}/tz/regist" class="J_menuItem">
                             <i class="fa fa-th-large"></i>
                             <span class="nav-label">会员列表</span>
                         </a>
                     </li>
-                     <li>
+                    <li>
                         <a href="${path}/tz/history" class="J_menuItem">
                             <i class="fa fa-handshake-o"></i>
                             <span class="nav-label">历史数据</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${path}/tz/admin/history" class="J_menuItem">
+                            <i class="fa fa-handshake-o"></i>
+                            <span class="nav-label">后台历史数据</span>
                         </a>
                     </li>
                 </ul>

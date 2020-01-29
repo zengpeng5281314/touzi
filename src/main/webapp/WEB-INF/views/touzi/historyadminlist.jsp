@@ -125,6 +125,7 @@
             <table class="list-table">
                 <thead>
                 <tr>
+                	<th>时间</th>
                     <th>现金交易人数</th>
                     <th>首充金额</th>
                     <th>首充人数</th>
@@ -136,15 +137,19 @@
                 </thead>
                 <div>
                     <tbody>
-	                    <tr>
-		                    <td>${historyDTO.moneyRechargeNum}</td>
-	                        <td>${historyDTO.fristMoney}</td>
-	                        <td>${historyDTO.fristNum}</td>
-	                        <td>${historyDTO.fristRechargeRate}</td>
-	                        <td>${historyDTO.regiestNum}</td>
-	                        <td>${historyDTO.useTicktRate}</td>
-	                        <td>${historyDTO.useTicktNum}</td>
-	                    </tr>
+                    	<c:forEach items="${list}" var="item">
+	                    	<tr>
+	                    		<td>${item.dayTime}</td>
+			                    <td>${item.moneyRechargeNum}</td>
+		                        <td>${item.fristMoney}</td>
+		                        <td>${item.fristNum}</td>
+		                        <td>${item.fristRechargeRate}</td>
+		                        <td>${item.regiestNum}</td>
+		                        <td>${item.useTicktRate}</td>
+		                        <td>${item.useTicktNum}</td>
+		                    </tr>
+                    	</c:forEach>
+	                    
                     </tbody>
                 </div>
             </table>
@@ -163,7 +168,7 @@
 	function search(){
 		var date = $("#date").val();
 		var endDate = $("#endDate").val();
-		window.location.href ="/tz/history?startTime="+date+"&endTime="+endDate;
+		window.location.href ="/tz/admin/history?startTime="+date+"&endTime="+endDate;
 		
 		 /* $.ajax({
  			type : "POST",

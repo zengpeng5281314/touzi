@@ -1,7 +1,8 @@
 package com.mytest.utils;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Locale;
 
 import net.sf.json.JsonConfig;
@@ -34,6 +35,11 @@ public class JsonDateValueProcessor implements JsonValueProcessor{
       
       
     private Object process(Object value){  
+    	if(value instanceof Timestamp){    
+            SimpleDateFormat sdf = new SimpleDateFormat(format,Locale.CHINA);    
+            return sdf.format(value);  
+        }    
+    	
         if(value instanceof Date){    
             SimpleDateFormat sdf = new SimpleDateFormat(format,Locale.CHINA);    
             return sdf.format(value);  

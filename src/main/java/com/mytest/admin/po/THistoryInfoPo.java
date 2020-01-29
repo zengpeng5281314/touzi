@@ -10,9 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.base.annotation.BeanMeta;
 import com.base.common.MBeanBase;
+import com.mytest.utils.Arith;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -46,5 +48,15 @@ public class THistoryInfoPo extends MBeanBase implements Serializable {
 	private Timestamp updateTime;
 	@Column(name="status")
 	private int status;
+	
+	@Transient
+	private double fristRechargeRate;
+	@Transient
+	private double useTicktRate;
+	
+	public void updateRate() {
+		fristRechargeRate = Arith.mul(Arith.div(fristNum, regiestNum, 4), 100);
+		useTicktRate = Arith.mul(Arith.div(useTicktNum, regiestNum, 4),100);
+	}
 	
 }
