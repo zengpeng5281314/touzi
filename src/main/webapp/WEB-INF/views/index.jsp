@@ -7,129 +7,106 @@
 <title>首页</title>
 <%@include file="/WEB-INF/views/common/base.jsp"%>
 <%@include file="/WEB-INF/views/common/header.jsp"%>
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="author" content="" />
-	<meta name="copyright" content="" />
-    <link rel="shortcut icon" href="/favicon.ico"> 
-    <link href="${path}/commons/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${path}/commons/css/font-awesome.css" rel="stylesheet">
-    <link href="${path}/commons/css/animate.css" rel="stylesheet">
-    <link href="${path}/commons/css/style.css" rel="stylesheet">
-    <style type="text/css">
-    	.img-circle{ width: 100%; border-radius: 0;}
-    </style>
-<script>
-    // 是否开启刷新记忆tab功能
-    // var is_remember = false;
-</script>
-</head>
- <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
-    <div id="wrapper">
-        <!--左侧导航开始-->
-        <nav class="navbar-default navbar-static-side" role="navigation">
-            <div class="nav-close"><i class="fa fa-times-circle"></i></div>
-            <div class="sidebar-collapse">
-                <ul class="nav" id="side-menu">
-                    <li class="nav-header">
-                        <div class="dropdown profile-element">
-                            <img alt="头像"  class="img-circle" src="${path}/commons/picture/main.jpg" />
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li class="divider"></li>
-                                <li><a href="${path}/signout">安全退出</a></li>
-                            </ul>
-                        </div>
-                        <div class="logo-element" title="Credit System Manager">CSM</div>
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <link rel="stylesheet" href="${path}/commons2/css/font.css">
+        <link rel="stylesheet" href="${path}/commons2/css/xadmin.css">
+        <!-- <link rel="stylesheet" href="${path}/commons2/css/theme5.css"> -->
+        <script src="${path}/commons2/lib/layui/layui.js" charset="utf-8"></script>
+        <script type="text/javascript" src="${path}/commons2/js/xadmin.js"></script>
+        <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+        <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script>
+            // 是否开启刷新记忆tab功能
+            // var is_remember = false;
+        </script>
+    </head>
+    <body class="index">
+        <!-- 顶部开始 -->
+        <div class="container">
+            <div class="logo">
+                <a href="javascript:;">用心做金融</a></div>
+            <div class="left_open">
+                <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
+            </div>
+            <ul class="layui-nav right" lay-filter="">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">admin</a>
+                </li>
+                <li class="layui-nav-item to-index">
+                    <a href="/">退出</a></li>
+            </ul>
+        </div>
+        <!-- 顶部结束 -->
+        <!-- 中部开始 -->
+        <!-- 左侧菜单开始 -->
+        <div class="left-nav">
+            <div id="side-nav">
+                <ul id="nav">
+                 	<li>
+                        <a href="javascript:;" onclick="xadmin.add_tab('首页','/tz/first')">
+                            <i class="iconfont left-nav-li" lay-tips="首页">&#xe6b4;</i>
+                            <cite>首页</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
                     </li>
                     <li>
-                        <a href="${path}/tz/first" class="J_menuItem">
-                            <i class="fa fa-th-large"></i>
-                            <span class="nav-label">首页</span>
-                        </a>
+                        <a href="javascript:;" onclick="xadmin.add_tab('后台首页','${path}/tz/admin/first')">
+                            <i class="iconfont left-nav-li" lay-tips="后台首页">&#xe6b4;</i>
+                            <cite>后台首页</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
                     </li>
                     <li>
-                        <a href="${path}/tz/admin/first" class="J_menuItem">
-                            <i class="fa fa-th-large"></i>
-                            <span class="nav-label">后台首页</span>
-                        </a>
-                    </li>
-                     <li>
-                        <a href="${path}/tz/regist" class="J_menuItem">
-                            <i class="fa fa-th-large"></i>
-                            <span class="nav-label">会员列表</span>
-                        </a>
+                        <a href="javascript:;" onclick="xadmin.add_tab('会员列表','/tz/regist')">
+                            <i class="iconfont left-nav-li" lay-tips="会员列表">&#xe6b8;</i>
+                            <cite>会员管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
                     </li>
                     <li>
-                        <a href="${path}/tz/history" class="J_menuItem">
-                            <i class="fa fa-handshake-o"></i>
-                            <span class="nav-label">历史数据</span>
-                        </a>
+                        <a href="javascript:;" onclick="xadmin.add_tab('历史记录','/tz/history')">
+                            <i class="iconfont left-nav-li" lay-tips="历史记录">&#xe723;</i>
+                            <cite>历史记录</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
                     </li>
                     <li>
-                        <a href="${path}/tz/admin/history" class="J_menuItem">
-                            <i class="fa fa-handshake-o"></i>
-                            <span class="nav-label">后台历史数据</span>
-                        </a>
+                        <a href="javascript:;" onclick="xadmin.add_tab('后台历史记录','${path}/tz/admin/first')">
+                            <i class="iconfont left-nav-li" lay-tips="后台历史记录">&#xe723;</i>
+                            <cite>后台历史记录</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
                     </li>
                 </ul>
             </div>
-        </nav>
-        <!--左侧导航结束-->
-        <!--右侧部分开始-->
-        <div id="page-wrapper" class="gray-bg dashbard-1">
-            <div class="row border-bottom">
-                    <ul class="nav navbar-top-links navbar-right">
-                    </ul>
-            </div>
-            <div class="row content-tabs">
-                <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i></button>
-                <nav class="page-tabs J_menuTabs">
-                    <div class="page-tabs-content">
-                        <a href="javascript:;" class="active J_menuTab" data-id="${path}/tz/first">首页</a>
+        </div>
+        <!-- <div class="x-slide_left"></div> -->
+        <!-- 左侧菜单结束 -->
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+            <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+                <ul class="layui-tab-title">
+                    <li class="home">
+                        <i class="layui-icon">&#xe68e;</i>首页</li></ul>
+                <div class="layui-unselect layui-form-select layui-form-selected" id="tab_right">
+                    <dl>
+                        <dd data-type="this">关闭当前</dd>
+                        <dd data-type="other">关闭其它</dd>
+                        <dd data-type="all">关闭全部</dd></dl>
+                </div>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <iframe src='${path}/tz/first' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
                     </div>
-                </nav>
-                <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i></button>
-                <div class="btn-group roll-nav roll-right">
-                    <button class="dropdown J_tabClose" data-toggle="dropdown">关闭<span class="caret"></span></button>
-                    <ul role="menu" class="dropdown-menu dropdown-menu-right">
-                        <li class="J_tabShowActive"><a>当前选项卡</a></li>
-                        <li class="divider"></li>
-                        <li class="J_tabCloseAll"><a>关闭全部</a></li>
-                        <li class="J_tabCloseOther"><a>关闭其他</a></li>
-                    </ul>
                 </div>
-                <a href="${path}/signout" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i>退出</a>
-            </div>
-            <div class="row J_mainContent" id="content-main">
-                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${path}/tz/first" frameborder="0" data-id="${path}/tz/first" seamless></iframe>
-            </div>
-            <div class="footer">
-                <div class="pull-right">&copy; 2017-2017 <a href="/" target="_blank">Chemers</a>
-                </div>
+                <div id="tab_show"></div>
             </div>
         </div>
-        <!--右侧部分结束-->
-    </div>
+        <div class="page-content-bg"></div>
+        <style id="theme_style"></style>
+        <!-- 右侧主体结束 -->
+        <!-- 中部结束 -->
+    </body>
 
-    <!-- 全局js -->
-    <script src="${path}/commons/js/jquery.min.js"></script>
-    <script src="${path}/commons/js/bootstrap.min.js"></script>
-    <script src="${path}/commons/js/jquery.metismenu.js"></script>
-    <script src="${path}/commons/js/jquery.slimscroll.min.js"></script>
-    <script src="${path}/commons/js/contabs.js"></script>
-    <script src="${path}/commons/js/pace.min.js"></script>
-    <script>	
-    	
-    	$().ready( function(){
-    			var businessAvatar = getCookie("businessAvatar");
-    			if( businessAvatar == null ){
-    				addCookie("businessAvatar", "http://avatartest.oss-cn-hangzhou.aliyuncs.com/upload/image/avatar/201905/e79c2a47-9c8e-421c-8280-fca0c388870e.png", {expires: 7 * 24 * 60 * 60});
-    			}else{
-    				$("#avatar").attr("src", getCookie("businessAvatar"));
-    			}
-    	})
-    </script>
-</body>
 </html>

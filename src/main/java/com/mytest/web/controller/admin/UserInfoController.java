@@ -23,6 +23,8 @@ import com.mytest.admin.po.TUserInfoPo;
 import com.mytest.admin.service.UserInfoService;
 import com.mytest.web.controller.base.BaseController;
 
+import net.sf.json.JSONObject;
+
 @Controller
 @RequestMapping("")
 public class UserInfoController extends BaseController {
@@ -34,38 +36,58 @@ public class UserInfoController extends BaseController {
 	@RequestMapping("/login")
 	@Transactional
 	public ModelAndView index(@RequestParam(defaultValue = "", required = false, value = "username") String username,
-			@RequestParam(defaultValue = "", required = false, value = "password") String password,HttpServletRequest request, HttpServletResponse response, ModelMap model)
-			throws Exception {
-		if(request.getMethod().equals("POST")){
+			@RequestParam(defaultValue = "", required = false, value = "password") String password,
+			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+		if (request.getMethod().equals("POST")) {
 			TUserInfoPo adminInfo = userInfoService.getTUserInfoPoByOpenId(username, password);
 			Cookie autoCookie = null;
-			if (adminInfo != null && adminInfo.getType()==1) {
-				String sef= URLEncoder.encode(JSON.toJSONString(adminInfo), "utf-8");
+			if (adminInfo != null && adminInfo.getType() == 1) {
+				String sef = URLEncoder.encode(JSON.toJSONString(adminInfo), "utf-8");
 				// 声明cookie
-				autoCookie = new Cookie("adminInfo",sef );
+				autoCookie = new Cookie("adminInfo", sef);
 				response.addCookie(autoCookie);
 				return new ModelAndView("redirect:/admin/index");
 			} else {
 				model.put("erroMsg", "用户名密码错误！");
 			}
 		}
-		
+
 		return new ModelAndView("/login", model);
+	}
+
+	@RequestMapping("/dologin")
+	@Transactional
+	@ResponseBody
+	public String dologin(@RequestParam(defaultValue = "", required = false, value = "username") String username,
+			@RequestParam(defaultValue = "", required = false, value = "password") String password,
+			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+		TUserInfoPo adminInfo = userInfoService.getTUserInfoPoByOpenId(username, password);
+		Cookie autoCookie = null;
+		if (adminInfo != null && adminInfo.getType() == 1) {
+			String sef = URLEncoder.encode(JSON.toJSONString(adminInfo), "utf-8");
+			// 声明cookie
+			autoCookie = new Cookie("adminInfo", sef);
+			response.addCookie(autoCookie);
+			return successJson("登录成功", null);
+		} else {
+			return errorJson("用户名密码不正确");
+		}
+
 	}
 
 	@RequestMapping("/signout")
 	@Transactional
-	public ModelAndView signOut(
-			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+	public ModelAndView signOut(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+			throws Exception {
 		TUserInfoPo adminInfo = (TUserInfoPo) request.getAttribute("adminInfo");
 		if (adminInfo != null) {
-			String sef= null;
+			String sef = null;
 			// 声明cookie
-			Cookie autoCookie = new Cookie("adminInfo",sef );
+			Cookie autoCookie = new Cookie("adminInfo", sef);
 			autoCookie.setMaxAge(0);
 			response.addCookie(autoCookie);
 		}
-		return new ModelAndView("redirect:/login",model);
+		return new ModelAndView("redirect:/login", model);
 	}
 
 }

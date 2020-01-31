@@ -138,6 +138,7 @@
                     <th>交易总人数</th>
                     <th>交易保证金</th>
                     <th>现金交易人数</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <div>
@@ -156,6 +157,11 @@
 		                        <td>${item.unsubscribeNum}</td>
 		                        <td>${item.unsubscribeMoney}</td>
 		                        <td>${item.moneyNum}</td>
+		                        <td class="td-manage">
+                                    <a title="编辑"  onclick="xadmin.open('编辑','/channelDetailed/editchanneldetailedshow?id=${item.id}')" href="javascript:;">
+                                      <i class="layui-icon">&#xe642;</i>
+                                    </a>
+                                  </td>
 	                    	</tr>
                     	</c:forEach>
 	                    

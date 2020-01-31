@@ -83,7 +83,9 @@ public class TZAdminMainController extends BaseController {
 		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
 		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor("yyyy-MM-dd"));
 		model.put("firstInfoPoList", JSONArray.fromObject(list, jsonConfig));
-		return new ModelAndView("/touzi/firstadmin", model);
+//		return new ModelAndView("/touzi/firstadmin", model);
+		
+		return new ModelAndView("/touzi/todaychanneldetailed", model);
 	}
 
 	@RequestMapping("/history")

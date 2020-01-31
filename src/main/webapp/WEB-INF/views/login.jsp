@@ -1,155 +1,99 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>后台登录</title>
-	<meta name="author" content="" />
-	<meta name="copyright" content="" />
-	<%@include file="/WEB-INF/views/common/base.jsp"%>
-    <link rel="shortcut icon" href="/favicon.ico"> 
- 	<link href="${path}/commons/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${path}/commons/css/font-awesome.css" rel="stylesheet">
-    <link href="${path}/commons/css/login.css"  rel="stylesheet"/>
-    <link href="${path}/commons/css/sweetalert.css" rel="stylesheet">
-	<style type="text/css">
-		.gohome{display:none}
-	</style>
+<title>后台登录-X-admin2.2</title>
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="stylesheet" href="${path}/commons2/css/font.css">
+<link rel="stylesheet" href="${path}/commons2/css/login.css">
+<link rel="stylesheet" href="${path}/commons2/css/xadmin.css">
+<script type="text/javascript"
+	src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="${path}/commons2/lib/layui/layui.js" charset="utf-8"></script>
+<!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
-<body class="form-bg">
-	<div class="container" >
-	    <div class="row ">
-	        <div class="sign-wrap">
-	            <form class="form-horizontal" action="login" method="post" id="loginForm">
-	            	<input type="hidden" id="enPassword" name="password" />
-	            	<input type="hidden" id="erroMsg" value="${erroMsg}"/>
-	                <span class="heading">
-	                	<img src="${path}/commons/picture/default_avatar.jpg" class="img-circle" />
-	                </span>
-	                
-	                <div class="form-group help">
-	                    <input type="text" class="form-control" name="username" id="username" placeholder="请输入用户名">
-	                    <i class="fa fa-user"></i>
-	                </div>
-	                <div class="form-group help">
-	                    <input type="password" class="form-control" id="password" placeholder="密　码" >
-	                    <i class="fa fa-lock"></i>
-	                </div>
-	                <!-- <div class="form-group ">
-	                	<img src="static/picture/b4f7c3efe978489ab17a0c749f02ea3c.gif" class="captcha" id="captchaImg"  title="切换验证码"/>
-	                    <input type="text" class="form-control captcha-input" name="captcha" id="captcha" placeholder="验证码">
-	                    <i class="fa fa-shield"></i>
-	                </div> -->
-	                <div class="form-group">
-	                    <div class="main-checkbox">
-	                        <input type="checkbox" value="true" id="isRememberUsername"  checked="checked"/>
-	                        <label for="isRememberUsername"></label>
-	                    </div>
-	                    <span class="text">记住用户名</span>
-	                    
-	                    <button type="submit" class="btn btn-default" id="loginBtn">登录</button>
-	                </div>
-	            </form>
-	           
-	        </div>
-	    </div>
+<body class="login-bg">
+
+	<div class="login layui-anim layui-anim-up">
+		<div class="message">x-admin2.0-管理登录</div>
+		<div id="darkbannerwrap"></div>
+
+		<form method="post" class="layui-form">
+			<input name="username" placeholder="用户名" type="text"
+				lay-verify="required" class="layui-input">
+			<hr class="hr15">
+			<input name="password" lay-verify="required" placeholder="密码"
+				type="password" class="layui-input">
+			<hr class="hr15">
+			<input value="登录" lay-submit lay-filter="login" style="width: 100%;"
+				type="submit">
+			<hr class="hr20">
+		</form>
 	</div>
 
-	<!-- 全局js -->
-    <script src="${path}/commons/js/jquery.min.js"></script>
-    <script src="${path}/commons/js/bootstrap.min.js"></script>
-    <script src="${path}/commons/js/sweetalert.min.js"></script>
-    <script src="${path}/commons/js/jquery.validate.min.js"></script>
-    <script src="${path}/commons/js/login.js"></script>
-    <script src="${path}/commons/js/jsbn.js"></script>
-	<script src="${path}/commons/js/prng4.js"></script>
-	<script src="${path}/commons/js/rng.js"></script>
-	<script src="${path}/commons/js/rsa.js"></script>
-	<script src="${path}/commons/js/base64.js"></script>
-	
-    <script>
-    	$().ready(function(){
-    		var erroMsg = $("#erroMsg").val();
-    		if(erroMsg!="")
-    			$.message("error", erroMsg);
-    		var $loginForm = $("#loginForm");
-    		var $loginBtn = $("#loginBtn");
-			var $enPassword = $("#enPassword");
-			var $username = $("#username");
-			var $password = $("#password");
-			var $captcha = $("#captcha");
-			var  $captchaImg = $("#captchaImg");
-			var $isRememberUsername = $("#isRememberUsername");
-			var $avatar = $(".img-circle");
-			
-			// 记住用户名
-			if(getCookie("adminUsername") != null) {
-				$isRememberUsername.prop("checked", true);
-				$username.val(getCookie("adminUsername"));
-				$password.focus();
-			} else {
-				$isRememberUsername.prop("checked", false);
-				$username.focus();
-			}
-			
-			if( getCookie("businessAvatar") != null ){
-				$avatar.attr("src", getCookie("businessAvatar"));
-			}
-				// 表单验证、记住用户名
-			$loginForm.submit( function() {
-				
-				var username = $username.val();
-				var password = $password.val();
-				var captcha = $captcha.val();
-				
-				if( $.trim( username ).length == 0 ){
-					$.message("warning", "请输入用户名");
-					return false;
-				}
-				
-				if( $.trim(password).length == 0 ){
-					$.message("warning", "请输入密码");
-					return false;
-				}
-				
-				/* if( $.trim(captcha).length != 4 ){
-					$.message("warning", "请输入验证码");
-					return false;
-				} */
-				
-				
-				if ($isRememberUsername.prop("checked")) {
-					addCookie("adminUsername", $username.val(), {expires: 7 * 24 * 60 * 60});
-				} else {
-					removeCookie("adminUsername");
-				}
-				
-				/* var rsaKey = new RSAKey();
-				rsaKey.setPublic(b64tohex("AITv/LGRSJGv3G1MUHWfwF/L6Ogbja6lCE9x+ush7j0I12J3r63qimjSMwV7j8tzb7bXYv6qd2WV+SNdhQKFVFHgImlHwvcL814ET8JH5TV/gSNofP5qtw8zU6dI79xiRzlMvVdoadwGxChc5gk5vHhOBnSY4sZSaGx4Ou5oezn1"), b64tohex("AQAB"));
-				var enPassword = hex2b64(rsaKey.encrypt(password)); */
-				$enPassword.val(password);
-				
-				$loginBtn.prop("disabled", "disabled").addClass("disabled");
+	<script>
+		$(function() {
+			layui.use('form', function() {
+				var form = layui.form;
+				// layer.msg('玩命卖萌中', function(){
+				//   //关闭后的操作
+				//   });
+				//监听提交
+				form.on('submit(login)', function(data) {
+					// alert(888)
+					//layer.msg(JSON.stringify(data.field), function() {
+					//	location.href = 'index.html'
+					//});
+					//return false;
+					
+					
+					//发异步，把数据提交给php
+                    $.ajax({
+		    			type : "POST",
+		    			url : "/dologin",
+		    			dataType : "json",
+		    			data : data.field,
+		    			success : function(res) {
+		    				if(res.success){
+		    					layer.alert("登录成功", {
+		                            icon: 6
+		                         },
+		                         function() {
+		                        	 location.href = "/admin/index";
+		                            
+		                         }); 
+		    				}else{
+		    					layer.alert("登录失败", {
+		                            icon: 6
+		                         },
+		                         function() {
+		                        	 location.href = "/login";
+		                         }); 
+		    				}
+		    			},
+		    			error : function(data) {
+		    				layer.alert("登录失败", {
+	                            icon: 6
+	                         },
+	                         function() {
+	                        	 location.href = "/login";
+	                         }); 
+		    			}
+		    		}); 
+                  return false;
+				});
 			});
-    
-    		// 切换验证码
-    		$captchaImg.click( function(){
-    			$(this).attr("src", "/business/common/captcha?" + Math.random());
-    		});
-    		
-    		/*
-    		var adminAvatar = getCookie("adminAvatar");
-    		var $heading = $(".heading");
-    		
-    		if( adminAvatar != null ){
-    			$heading.find("i").remove();
-    			var avatar = '<img src="' + adminAvatar + '" alt="管理员头像" class="img-circle">';
-    			$heading.append( avatar );	
-    		}
-    		*/
-    		
-    	})
-    </script>
+		})
+	</script>
+	<!-- 底部结束 -->
 </body>
 </html>

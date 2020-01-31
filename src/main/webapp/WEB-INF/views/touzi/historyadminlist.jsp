@@ -133,6 +133,7 @@
                     <th>注册人数</th>
                     <th>用券率</th>
                     <th>用券人数</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <div>
@@ -147,6 +148,7 @@
 		                        <td>${item.regiestNum}</td>
 		                        <td>${item.useTicktRate}</td>
 		                        <td>${item.useTicktNum}</td>
+		                        <td>caozuo</td>
 		                    </tr>
                     	</c:forEach>
 	                    
