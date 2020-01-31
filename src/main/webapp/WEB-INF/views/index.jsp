@@ -36,10 +36,10 @@
             </div>
             <ul class="layui-nav right" lay-filter="">
                 <li class="layui-nav-item">
-                    <a href="javascript:;">admin</a>
+                    <a href="javascript:;">${name }</a>
                 </li>
                 <li class="layui-nav-item to-index">
-                    <a href="/">退出</a></li>
+                    <a href="/signout">退出</a></li>
             </ul>
         </div>
         <!-- 顶部结束 -->
@@ -54,12 +54,15 @@
                             <cite>首页</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
                     </li>
-                    <li>
-                        <a href="javascript:;" onclick="xadmin.add_tab('后台首页','${path}/tz/admin/first')">
-                            <i class="iconfont left-nav-li" lay-tips="后台首页">&#xe6b4;</i>
-                            <cite>后台首页</cite>
-                            <i class="iconfont nav_right">&#xe697;</i></a>
-                    </li>
+                   
+                    <c:if test="${ismaster}">
+	                    <li>
+	                        <a href="javascript:;" onclick="xadmin.add_tab('后台首页','${path}/tz/admin/first')">
+	                            <i class="iconfont left-nav-li" lay-tips="后台首页">&#xe6b4;</i>
+	                            <cite>后台首页</cite>
+	                            <i class="iconfont nav_right">&#xe697;</i></a>
+	                    </li>
+                    </c:if>
                     <li>
                         <a href="javascript:;" onclick="xadmin.add_tab('会员列表','/tz/regist')">
                             <i class="iconfont left-nav-li" lay-tips="会员列表">&#xe6b8;</i>
@@ -72,12 +75,14 @@
                             <cite>历史记录</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
                     </li>
+                    <c:if test="${ismaster}">
                     <li>
                         <a href="javascript:;" onclick="xadmin.add_tab('后台历史记录','${path}/tz/admin/history')">
                             <i class="iconfont left-nav-li" lay-tips="后台历史记录">&#xe723;</i>
                             <cite>后台历史记录</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
                     </li>
+                    </c:if>
                 </ul>
             </div>
         </div>

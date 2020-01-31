@@ -2,6 +2,7 @@ package com.mytest.web.controller.touzi;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -63,6 +64,8 @@ public class TZMainController extends BaseController {
 			@RequestParam(defaultValue = "50", required = false, value = "pageSize") int pageSize,
 			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
 		TUserInfoPo userInfoPo = (TUserInfoPo) request.getAttribute("adminInfo");
+//		if(userInfoPo==null)
+//			return new ModelAndView("redirect:/login");
 		// userId = userInfoPo.getId();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Timestamp startT = null;
@@ -70,6 +73,13 @@ public class TZMainController extends BaseController {
 		if (!startTime.equals("") && !endTime.equals("")) {
 			startTime = startTime + " 00:00:00";
 			endTime = endTime + " 23:59:59";
+			startT = new Timestamp(sdf.parse(startTime).getTime());
+			endT = new Timestamp(sdf.parse(endTime).getTime());
+		}else{
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+			String date = sdf2.format(new Date(System.currentTimeMillis()));
+			startTime = date + " 00:00:00";
+			endTime = date + " 23:59:59";
 			startT = new Timestamp(sdf.parse(startTime).getTime());
 			endT = new Timestamp(sdf.parse(endTime).getTime());
 		}
@@ -115,6 +125,13 @@ public class TZMainController extends BaseController {
 			endTime = endTime + " 23:59:59";
 			startT = new Timestamp(sdf.parse(startTime).getTime());
 			endT = new Timestamp(sdf.parse(endTime).getTime());
+		}else{
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+			String date = sdf2.format(new Date(System.currentTimeMillis()));
+			startTime = date + " 00:00:00";
+			endTime = date + " 23:59:59";
+			startT = new Timestamp(sdf.parse(startTime).getTime());
+			endT = new Timestamp(sdf.parse(endTime).getTime());
 		}
 		Page page = new Page(currentPage, pageSize);
 		Page pageList = registInfoService.pageRegistInfoInfoPo(startT, endT, page);
@@ -147,6 +164,13 @@ public class TZMainController extends BaseController {
 		if (!startTime.equals("") && !endTime.equals("")) {
 			startTime = startTime + " 00:00:00";
 			endTime = endTime + " 23:59:59";
+			startT = new Timestamp(sdf.parse(startTime).getTime());
+			endT = new Timestamp(sdf.parse(endTime).getTime());
+		}else{
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+			String date = sdf2.format(new Date(System.currentTimeMillis()));
+			startTime = date + " 00:00:00";
+			endTime = date + " 23:59:59";
 			startT = new Timestamp(sdf.parse(startTime).getTime());
 			endT = new Timestamp(sdf.parse(endTime).getTime());
 		}
