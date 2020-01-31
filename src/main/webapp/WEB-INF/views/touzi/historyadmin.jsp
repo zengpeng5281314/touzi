@@ -48,42 +48,34 @@
                                 <thead>
                                     <tr>
 					                	<th>时间</th>
-					                    <th>注册人数</th>
-					                    <th>订购券盈利</th>
-					                    <th>充值人数</th>
-					                    <th>充值金额</th>
-					                    <th>平仓笔数</th>
-					                    <th>手续费</th>
-					                    <th>预定总盈亏</th>
-					                    <th>退订总盈亏</th>
-					                    <th>交易总人数</th>
-					                    <th>交易保证金</th>
 					                    <th>现金交易人数</th>
+					                    <th>首充金额</th>
+					                    <th>首充人数</th>
+					                    <th>首充率</th>
+					                    <th>注册人数</th>
+					                    <th>用券率</th>
+					                    <th>用券人数</th>
 					                    <th>操作</th>
 					                </tr>
                                 </thead>
                                 <tbody>
-                                	<c:forEach items="${firstInfoPoList}" var="item">
-	                                   <tr>
-			                    			<td>${item.dayTime}</td>
-						                    <td>${item.regiestNum}</td>
-					                        <td>${item.ticketProfit}</td>
-					                        <td>${item.rechargeNum}</td>
-					                        <td>${item.rechargeMoney}</td>
-					                        <td>${item.closeOutNum}</td>
-					                        <td>${item.fee}</td>
-					                        <td>${item.scheduledTotal}</td>
-					                        <td>${item.unsubscribeTotal}</td>
-					                        <td>${item.unsubscribeNum}</td>
-					                        <td>${item.unsubscribeMoney}</td>
-					                        <td>${item.moneyNum}</td>
+                                	<c:forEach items="${list}" var="item">
+				                    	<tr>
+				                    		<td>${item.dayTime}</td>
+						                    <td>${item.moneyRechargeNum}</td>
+					                        <td>${item.fristMoney}</td>
+					                        <td>${item.fristNum}</td>
+					                        <td>${item.fristRechargeRate}</td>
+					                        <td>${item.regiestNum}</td>
+					                        <td>${item.useTicktRate}</td>
+					                        <td>${item.useTicktNum}</td>
 					                        <td class="td-manage">
-			                                    <a title="编辑"  onclick="xadmin.open('编辑','/tz/admin/editfirstadminshow?id=${item.id}')" href="javascript:;">
-			                                      <i class="layui-icon">&#xe642;</i>
-			                                    </a>
-			                                  </td>
-				                    	</tr>
-                                   </c:forEach>
+			                                   <a title="编辑"  onclick="xadmin.open('编辑','/tz/admin/edithistoryshow?historyInfoPoid=${item.id}')" href="javascript:;">
+			                                     <i class="layui-icon">&#xe642;</i>
+			                                   </a>
+			                                 </td>
+					                    </tr>
+			                    	</c:forEach>
                                 </tbody>
                             </table>
                         </div>

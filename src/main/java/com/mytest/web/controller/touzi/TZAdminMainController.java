@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -125,6 +126,11 @@ public class TZAdminMainController extends BaseController {
 		TFirstInfoPo firstInfoPo = firstInfoService.getTFirstInfoPo(firstInfoPoid);
 		if (firstInfoPo == null)
 			return errorJson("信息有误！请退出后重试");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sdf.format(new Date(System.currentTimeMillis()));
+		String date2 = sdf.format(firstInfoPo.getDayTime());
+		if(!date.equals(date2))
+			return errorJson("非当天数据，禁止录入");
 		if (firstInfoPo.getTicketProfit() < ticketProfit)
 			firstInfoPo.setTicketProfit(ticketProfit);
 		if (firstInfoPo.getRechargeNum() < rechargeNum)
@@ -180,7 +186,7 @@ public class TZAdminMainController extends BaseController {
 		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
 		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor("yyyy-MM-dd"));
 		model.put("list", JSONArray.fromObject(list, jsonConfig));
-		return new ModelAndView("/touzi/historyadminlist", model);
+		return new ModelAndView("/touzi/historyadmin", model);
 	}
 
 	@RequestMapping("/edithistoryshow")
@@ -213,6 +219,11 @@ public class TZAdminMainController extends BaseController {
 		THistoryInfoPo historyInfoPo = historyInfoService.getTHistoryInfoPo(historyInfoPoid);
 		if (historyInfoPo == null)
 			return errorJson("信息有误！请退出后重试");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sdf.format(new Date(System.currentTimeMillis()));
+		String date2 = sdf.format(historyInfoPo.getDayTime());
+		if(!date.equals(date2))
+			return errorJson("非当天数据，禁止录入");
 		if (historyInfoPo.getMoneyRechargeNum() < moneyRechargeNum)
 			historyInfoPo.setMoneyRechargeNum(moneyRechargeNum);
 		if (historyInfoPo.getFristMoney() < fristMoney)

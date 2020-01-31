@@ -142,7 +142,7 @@
                 <div>
                     <tbody>
 	                    <tr>
-		                    <td>${firstInfoPo.rechargeNum}</td>
+		                    <td>${firstInfoPo.regiestNum}</td>
 	                        <td>${firstInfoPo.ticketProfit}</td>
 	                        <td>${firstInfoPo.rechargeNum}</td>
 	                        <td>${firstInfoPo.rechargeMoney}</td>

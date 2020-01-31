@@ -42,6 +42,7 @@ public class AnalyzeDataService {
 		JSONObject json = JSONObject.fromObject(content, jsonConfig);
 		JSONObject data = json.getJSONObject("data");
 
+		int registerCount = data.getInt("registerCount");
 		double ticketProfitLoss = Double.valueOf(data.getString("ticketProfitLoss"));
 		int rechargeUsers = data.getInt("rechargeUsers");
 		double rechargeMoney = Double.valueOf(data.getString("rechargeMoney"));
@@ -60,6 +61,8 @@ public class AnalyzeDataService {
 		TFirstInfoPo t = null;
 		if (list != null && list.size() > 0) {
 			t = list.get(0);
+			if (t.getRegiestNum() < registerCount)
+				t.setRegiestNum(registerCount);
 			if (t.getTicketProfit() < ticketProfitLoss)
 				t.setTicketProfit(ticketProfitLoss);
 			if (t.getRechargeNum() < rechargeUsers)
@@ -156,7 +159,6 @@ public class AnalyzeDataService {
 		int ticketUsers = totalStatistics.getInt("ticketUsers");
 		double totalFee = Double.valueOf(totalStatistics.getString("totalFee"));
 
-		
 		Date dayTime = new Date(new java.util.Date().getTime());
 		MParam mparam = new MParam();
 		mparam.add("status", 1);
@@ -172,11 +174,17 @@ public class AnalyzeDataService {
 			historyInfoPo.setDayTime(dayTime);
 			historyInfoPo.setStatus(1);
 		}
-		historyInfoPo.setFristMoney(rechargeMoney);
-		historyInfoPo.setFristNum(rechargeUsers);
-		historyInfoPo.setMoneyRechargeNum(cashOrderUsers);
-		historyInfoPo.setRegiestNum(registerCount);
-		historyInfoPo.setUseTicktNum(ticketUsers);
+		if (historyInfoPo.getMoneyRechargeNum() < cashOrderUsers)
+			historyInfoPo.setMoneyRechargeNum(cashOrderUsers);
+		if (historyInfoPo.getFristMoney() < rechargeMoney)
+			historyInfoPo.setFristMoney(rechargeMoney);
+		if (historyInfoPo.getFristNum() < rechargeUsers)
+			historyInfoPo.setFristNum(rechargeUsers);
+		if (historyInfoPo.getRegiestNum() < registerCount)
+			historyInfoPo.setRegiestNum(registerCount);
+		if (historyInfoPo.getUseTicktNum() < ticketUsers)
+			historyInfoPo.setUseTicktNum(ticketUsers);
+
 		mBeanDAO.saveOrUpdate(historyInfoPo);
 
 	}

@@ -112,7 +112,7 @@
                     //发异步，把数据提交给php
                     $.ajax({
 		    			type : "POST",
-		    			url : "/tz/admin/editfirstadmin",
+		    			url : "/tz/admin/edithistory",
 		    			dataType : "json",
 		    			data : data.field,
 		    			success : function(res) {
@@ -129,7 +129,17 @@
 		                            
 		                         }); 
 		    				}else{
-		    					alert(res.msg);
+		    					layer.alert(res.msg, {
+		                            icon: 6
+		                         },
+		                         function() {
+		                             //关闭当前frame
+		                             xadmin.close();
+
+		                             // 可以对父窗口进行刷新 
+		                             xadmin.father_reload();
+		                            
+		                         }); 
 		    				}
 		    			},
 		    			error : function(data) {
