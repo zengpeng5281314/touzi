@@ -30,6 +30,8 @@ public class TFirstInfoPo extends MBeanBase implements Serializable {
 	private long id;
 	@Column(name="day_time")
 	private Date dayTime;
+	@Column(name="regiest_num")
+	private int regiestNum;
 	@Column(name="ticket_profit")
 	private double ticketProfit;
 	@Column(name="recharge_num")

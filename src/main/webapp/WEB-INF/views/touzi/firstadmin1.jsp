@@ -116,50 +116,63 @@
 </head>
 <body>
 <div id="app">
-    <div class="search-wrap"  style="margin-bottom:0px">
+    <div class="search-wrap" style="margin-bottom:0px">
 	        <input class="date" id="date" placeholder="请选择开始时间"/>
 	        <input class="date" id="endDate" placeholder="请选择结束时间"/>
 	        <div class="search" id ="search" onclick="search()">搜索</div>
-    </div>
+    </div><!-- 
+        <a class="back-btn" href="javascript:history.go(-1)">返回</a> -->
         <div class="datalist-wrap">
             <table class="list-table">
                 <thead>
                 <tr>
-                	<th>时间</th>
+                	<th>时间1</th>
+                    <th>注册人数2</th>
+                    <th>订购券盈利</th>
+                    <th>充值人数</th>
+                    <th>充值金额</th>
+                    <th>平仓笔数</th>
+                    <th>手续费</th>
+                    <th>预定总盈亏</th>
+                    <th>退订总盈亏</th>
+                    <th>交易总人数</th>
+                    <th>交易保证金</th>
                     <th>现金交易人数</th>
-                    <th>首充金额</th>
-                    <th>首充人数</th>
-                    <th>首充率</th>
-                    <th>注册人数</th>
-                    <th>用券率</th>
-                    <th>用券人数</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <div>
                     <tbody>
-                    	<c:forEach items="${list}" var="item">
-	                    	<tr>
-	                    		<td>${item.dayTime}</td>
-			                    <td>${item.moneyRechargeNum}</td>
-		                        <td>${item.fristMoney}</td>
-		                        <td>${item.fristNum}</td>
-		                        <td>${item.fristRechargeRate}</td>
-		                        <td>${item.regiestNum}</td>
-		                        <td>${item.useTicktRate}</td>
-		                        <td>${item.useTicktNum}</td>
-		                        <td>caozuo</td>
-		                    </tr>
+                    	<c:forEach items="${firstInfoPoList}" var="item">
+                    		<tr>
+                    			<td>${item.dayTime}</td>
+			                    <td>${item.rechargeNum}</td>
+		                        <td>${item.ticketProfit}</td>
+		                        <td>${item.rechargeNum}</td>
+		                        <td>${item.rechargeMoney}</td>
+		                        <td>${item.closeOutNum}</td>
+		                        <td>${item.fee}</td>
+		                        <td>${item.scheduledTotal}</td>
+		                        <td>${item.unsubscribeTotal}</td>
+		                        <td>${item.unsubscribeNum}</td>
+		                        <td>${item.unsubscribeMoney}</td>
+		                        <td>${item.moneyNum}</td>
+		                        <td class="td-manage">
+                                    <a title="编辑a"  onclick="xadmin.open('编辑a','/tz/editfirstadminshow?id=${item.id}')" href="javascript:;">
+                                      <i class="layui-icon">&#xe642;</i>
+                                    </a>
+                                  </td>
+	                    	</tr>
                     	</c:forEach>
 	                    
                     </tbody>
                 </div>
             </table>
-            <c:if test="${total==0 }">
+           <%--  <c:if test="${total==0 }">
 	            <div style="width: 100%;">
 	                <div class="none-data">暂无数据!</div>
 	            </div>
-            </c:if>
+            </c:if> --%>
         </div>
 
 </div>
@@ -170,7 +183,7 @@
 	function search(){
 		var date = $("#date").val();
 		var endDate = $("#endDate").val();
-		window.location.href ="/tz/admin/history?startTime="+date+"&endTime="+endDate;
+		window.location.href ="/tz/admin/first?startTime="+date+"&endTime="+endDate;
 		
 		 /* $.ajax({
  			type : "POST",
@@ -209,17 +222,18 @@
                     }
                 }
                 laydate(start);
+              //日期范围限制
                 var end = {
-                        elem: '#endDate',
-                        format: 'YYYY-MM-DD',
-                        max: '2099-06-16 23:59:59', //最大日期
-                        istime: true,
-                        istoday: false,
-                        choose: function (datas) {
-                            _this.date = datas;
-                        }
+                    elem: '#endDate',
+                    format: 'YYYY-MM-DD',
+                    max: '2099-06-16 23:59:59', //最大日期
+                    istime: true,
+                    istoday: false,
+                    choose: function (datas) {
+                        _this.date = datas;
                     }
-                    laydate(end);
+                }
+                laydate(end);
             }, 20)
             //this._getData()
         },
@@ -232,7 +246,7 @@
         methods: {
             _getData() {
                 let params = window.Qs.stringify({'linkId': getCookie("linkId")})
-                axios.post('/channeldetailed/viewlist', params)
+                axios.post('/tz/first', params)
                 .then((res) => {
                     this.list = res.data
                     console.log(this.list);

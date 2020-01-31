@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -83,9 +84,70 @@ public class TZAdminMainController extends BaseController {
 		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
 		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor("yyyy-MM-dd"));
 		model.put("firstInfoPoList", JSONArray.fromObject(list, jsonConfig));
-//		return new ModelAndView("/touzi/firstadmin", model);
-		
-		return new ModelAndView("/touzi/todaychanneldetailed", model);
+		// return new ModelAndView("/touzi/firstadmin", model);
+
+		return new ModelAndView("/touzi/firstadmin", model);
+	}
+
+	@RequestMapping("/editfirstadminshow")
+	@Transactional
+	public ModelAndView editfirstadminshow(@RequestParam(defaultValue = "0", required = false, value = "id") long id,
+			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+		TUserInfoPo userInfoPo = (TUserInfoPo) request.getAttribute("adminInfo");
+		// userId = userInfoPo.getId();
+		TFirstInfoPo firstInfoPo = firstInfoService.getTFirstInfoPo(id);
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
+		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor("yyyy-MM-dd"));
+		model.put("firstInfoPo", JSONObject.fromObject(firstInfoPo, jsonConfig));
+		return new ModelAndView("/touzi/editfirstadmin", model);
+	}
+
+	@RequestMapping("/editfirstadmin")
+	@Transactional
+	@ResponseBody
+	public String editfirstadmin(
+			@RequestParam(defaultValue = "0", required = false, value = "firstInfoPoid") long firstInfoPoid,
+			@RequestParam(defaultValue = "0", required = false, value = "regiestNum") int regiestNum,
+			@RequestParam(defaultValue = "0.00", required = false, value = "ticketProfit") double ticketProfit,
+			@RequestParam(defaultValue = "0", required = false, value = "rechargeNum") int rechargeNum,
+			@RequestParam(defaultValue = "0.00", required = false, value = "rechargeMoney") double rechargeMoney,
+			@RequestParam(defaultValue = "0", required = false, value = "closeOutNum") int closeOutNum,
+			@RequestParam(defaultValue = "0.00", required = false, value = "fee") double fee,
+			@RequestParam(defaultValue = "0.00", required = false, value = "scheduledTotal") double scheduledTotal,
+			@RequestParam(defaultValue = "0.00", required = false, value = "unsubscribeTotal") double unsubscribeTotal,
+			@RequestParam(defaultValue = "0", required = false, value = "unsubscribeNum") int unsubscribeNum,
+			@RequestParam(defaultValue = "0.00", required = false, value = "unsubscribeMoney") double unsubscribeMoney,
+			@RequestParam(defaultValue = "0", required = false, value = "moneyNum") int moneyNum,
+			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+		TUserInfoPo userInfoPo = (TUserInfoPo) request.getAttribute("adminInfo");
+		// // userId = userInfoPo.getId();
+		TFirstInfoPo firstInfoPo = firstInfoService.getTFirstInfoPo(firstInfoPoid);
+		if (firstInfoPo == null)
+			return errorJson("信息有误！请退出后重试");
+		if (firstInfoPo.getTicketProfit() < ticketProfit)
+			firstInfoPo.setTicketProfit(ticketProfit);
+		if (firstInfoPo.getRechargeNum() < rechargeNum)
+			firstInfoPo.setRechargeNum(rechargeNum);
+		if (firstInfoPo.getRechargeMoney() < rechargeMoney)
+			firstInfoPo.setRechargeMoney(rechargeMoney);
+		if (firstInfoPo.getCloseOutNum() < closeOutNum)
+			firstInfoPo.setCloseOutNum(closeOutNum);
+		if (firstInfoPo.getFee() < fee)
+			firstInfoPo.setFee(fee);
+		if (firstInfoPo.getScheduledTotal() < scheduledTotal)
+			firstInfoPo.setScheduledTotal(scheduledTotal);
+		if (firstInfoPo.getUnsubscribeTotal() < unsubscribeTotal)
+			firstInfoPo.setUnsubscribeTotal(unsubscribeTotal);
+		if (firstInfoPo.getUnsubscribeNum() < unsubscribeNum)
+			firstInfoPo.setUnsubscribeNum(unsubscribeNum);
+		if (firstInfoPo.getUnsubscribeMoney() < unsubscribeMoney)
+			firstInfoPo.setUnsubscribeMoney(unsubscribeMoney);
+		if (firstInfoPo.getMoneyNum() < moneyNum)
+			firstInfoPo.setMoneyNum(moneyNum);
+		firstInfoPo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		firstInfoService.updateTFirstInfoPo(firstInfoPo);
+		return successJson("修改成功", null);
 	}
 
 	@RequestMapping("/history")
@@ -113,12 +175,57 @@ public class TZAdminMainController extends BaseController {
 		for (THistoryInfoPo tHistoryInfoPo : list) {
 			tHistoryInfoPo.updateRate();
 		}
-		
+
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
 		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor("yyyy-MM-dd"));
 		model.put("list", JSONArray.fromObject(list, jsonConfig));
 		return new ModelAndView("/touzi/historyadminlist", model);
+	}
+
+	@RequestMapping("/edithistoryshow")
+	@Transactional
+	public ModelAndView edithistoryshow(@RequestParam(defaultValue = "0", required = false, value = "historyInfoPoid") long historyInfoPoid,
+			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+		TUserInfoPo userInfoPo = (TUserInfoPo) request.getAttribute("adminInfo");
+		// userId = userInfoPo.getId();
+		THistoryInfoPo historyInfoPo = historyInfoService.getTHistoryInfoPo(historyInfoPoid);
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
+		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor("yyyy-MM-dd"));
+		model.put("historyInfoPo", JSONObject.fromObject(historyInfoPo, jsonConfig));
+		return new ModelAndView("/touzi/edithistoryshow", model);
+	}
+
+	@RequestMapping("/edithistory")
+	@Transactional
+	@ResponseBody
+	public String edithistory(
+			@RequestParam(defaultValue = "0", required = false, value = "historyInfoPoid") long historyInfoPoid,
+			@RequestParam(defaultValue = "0", required = false, value = "moneyRechargeNum") int moneyRechargeNum,
+			@RequestParam(defaultValue = "0.00", required = false, value = "fristMoney") double fristMoney,
+			@RequestParam(defaultValue = "0", required = false, value = "fristNum") int fristNum,
+			@RequestParam(defaultValue = "0", required = false, value = "regiestNum") int regiestNum,
+			@RequestParam(defaultValue = "0", required = false, value = "useTicktNum") int useTicktNum,
+			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+		TUserInfoPo userInfoPo = (TUserInfoPo) request.getAttribute("adminInfo");
+		// // userId = userInfoPo.getId();
+		THistoryInfoPo historyInfoPo = historyInfoService.getTHistoryInfoPo(historyInfoPoid);
+		if (historyInfoPo == null)
+			return errorJson("信息有误！请退出后重试");
+		if (historyInfoPo.getMoneyRechargeNum() < moneyRechargeNum)
+			historyInfoPo.setMoneyRechargeNum(moneyRechargeNum);
+		if (historyInfoPo.getFristMoney() < fristMoney)
+			historyInfoPo.setFristMoney(fristMoney);
+		if (historyInfoPo.getFristNum() < fristNum)
+			historyInfoPo.setFristNum(fristNum);
+		if (historyInfoPo.getRegiestNum() < regiestNum)
+			historyInfoPo.setRegiestNum(regiestNum);
+		if (historyInfoPo.getUseTicktNum() < useTicktNum)
+			historyInfoPo.setUseTicktNum(useTicktNum);
+		historyInfoPo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		historyInfoService.updateTHistoryInfoPo(historyInfoPo);
+		return successJson("修改成功", null);
 	}
 
 }

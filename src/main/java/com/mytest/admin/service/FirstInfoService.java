@@ -27,4 +27,12 @@ public class FirstInfoService {
 		return mFrameworkService.listPageInfo(TFirstInfoPo.class, page, mparam);
 	}
 	
+	public TFirstInfoPo getTFirstInfoPo(long id){
+		return mFrameworkService.get(TFirstInfoPo.class, String.valueOf(id));
+	}
+	
+	public void updateTFirstInfoPo(TFirstInfoPo firstInfoPo){
+		mBeanDAO.saveOrUpdate(firstInfoPo);
+	}
+	
 }

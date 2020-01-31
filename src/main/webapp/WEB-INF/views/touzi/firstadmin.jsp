@@ -4,293 +4,165 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- <title>列表</title>
+<title>管理平台</title>
 <%@include file="/WEB-INF/views/common/base.jsp"%>
 <%@include file="/WEB-INF/views/common/header.jsp"%>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
-<meta name="author" content="" />
- <link rel="stylesheet" type="text/css" href="${path}/commons/css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="${path}/commons/css/flatpickr.min.css"/>
-    <script src="${path}/commons/js/vue.js"></script>
-    <script src="${path}/commons/js/axios.min.js"></script>
-    <script src="${path}/commons/js/qs.js"></script>
-
-    <style type="text/css">
-        body {
-            font-size: 16px;
-            background-color: #fff;
-        }
-        input::-webkit-input-placeholder {
-            color: #999;
-        }
-        .date {
-            padding: 7px 10px;
-            border: 1px solid #e7eaec;
-            border-radius: 5px;
-            font-size: 16px;
-            color: #999;
-        }
-        .search-wrap {
-            padding: 30px 0 0 25px;
-            margin-bottom: 50px;
-        }
-        /*IOS滚动条*/
-        .datalist-wrap::-webkit-scrollbar {
-            -webkit-appearance: none;
-            width: 10px;
-            height: 10px;
-        }
-        .datalist-wrap::-webkit-scrollbar-thumb {
-            border-radius: 5px;
-            border: 2px solid #fff;
-            background-color: rgba(0, 0, 0, .3);
-        }
-        .datalist-wrap {
-            max-height: 100vh;
-            overflow: auto;
-            padding: 25px;
-        }
-        .none-data {
-            padding-top: 30px;
-            color: #333;
-            text-align: center;
-        }
-        .list-table {
-            width: 100%;
-            border-collapse:collapse;
-        }
-        .list-table thead {
-            font-weight: bold;
-            background-color: #fff;
-            border-bottom:2px solid #ccc;
-        }
-        .list-table tbody {
-            background-color: #f9f9f9;
-            color: #999;
-        }
-        .list-table tr td, .list-table tr th {
-            padding: 10px;
-            white-space: nowrap;
-            text-align: left;
-            border: 1px solid #ddd;
-            border-radius:2px;
-            text-shadow:1px 1px 1px #fff;
-        }
-        .search {
-            display: inline-block;
-            border: 1px solid #e7eaec;
-            border-radius: 5px;
-            margin-left: 15px;
-            padding: 7px 10px;
-            vertical-align: middle;
-            color: #999;
-        }
-        .details {
-            border-radius: 5px;
-            padding: 5px 10px;
-            background-color: #1ab394;
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-            text-shadow: 0 0 0;
-        }
-        .back-btn {
-            background-color: #535558;
-            border-color: #535558;
-            color: #FFFFFF;
-            min-width: 110px;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 3px;
-            display: inline-block;
-            padding: 6px 12px;
-            margin-bottom: 0;
-            margin-left: 25px;
-            font-size: 14px;
-            font-weight: 400;
-            vertical-align: middle;
-        }
-    </style>
+<link rel="stylesheet" href="${path}/commons/css/font.css">
+<link rel="stylesheet" href="${path}/commons/css/xadmin.css">
+<link rel="stylesheet" href="${path}/commons/css/theme5.css">
+<script src="${path}/commons/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="${path}/commons/js/xadmin.js"></script>
 </head>
-<body>
-<div id="app">
-    <div class="search-wrap" style="margin-bottom:0px">
-	        <input class="date" id="date" placeholder="请选择开始时间"/>
-	        <input class="date" id="endDate" placeholder="请选择结束时间"/>
-	        <div class="search" id ="search" onclick="search()">搜索</div>
-    </div><!-- 
-        <a class="back-btn" href="javascript:history.go(-1)">返回</a> -->
-        <div class="datalist-wrap">
-            <table class="list-table">
-                <thead>
-                <tr>
-                	<th>时间</th>
-                    <th>注册人数</th>
-                    <th>订购券盈利</th>
-                    <th>充值人数</th>
-                    <th>充值金额</th>
-                    <th>平仓笔数</th>
-                    <th>手续费</th>
-                    <th>预定总盈亏</th>
-                    <th>退订总盈亏</th>
-                    <th>交易总人数</th>
-                    <th>交易保证金</th>
-                    <th>现金交易人数</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <div>
-                    <tbody>
-                    	<c:forEach items="${firstInfoPoList}" var="item">
-                    		<tr>
-                    			<td>${item.dayTime}</td>
-			                    <td>${item.rechargeNum}</td>
-		                        <td>${item.ticketProfit}</td>
-		                        <td>${item.rechargeNum}</td>
-		                        <td>${item.rechargeMoney}</td>
-		                        <td>${item.closeOutNum}</td>
-		                        <td>${item.fee}</td>
-		                        <td>${item.scheduledTotal}</td>
-		                        <td>${item.unsubscribeTotal}</td>
-		                        <td>${item.unsubscribeNum}</td>
-		                        <td>${item.unsubscribeMoney}</td>
-		                        <td>${item.moneyNum}</td>
-		                        <td class="td-manage">
-                                    <a title="编辑"  onclick="xadmin.open('编辑','/channelDetailed/editchanneldetailedshow?id=${item.id}')" href="javascript:;">
-                                      <i class="layui-icon">&#xe642;</i>
-                                    </a>
-                                  </td>
-	                    	</tr>
-                    	</c:forEach>
-	                    
-                    </tbody>
-                </div>
-            </table>
-           <%--  <c:if test="${total==0 }">
-	            <div style="width: 100%;">
-	                <div class="none-data">暂无数据!</div>
-	            </div>
-            </c:if> --%>
+     <body>
+   
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a>
+                    <cite>导航元素</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+                <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+            </a>
         </div>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body ">
+                            <form class="layui-form layui-col-space5">
+                                <div class="layui-input-inline layui-show-xs-block">
+                                    <input class="layui-input" placeholder="开始日" name="startTime" id="start"></div>
+                                <div class="layui-input-inline layui-show-xs-block">
+                                    <input class="layui-input" placeholder="截止日" name="endTime" id="end"></div>
+                                <div class="layui-input-inline layui-show-xs-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                                        <i class="layui-icon">&#xe615;</i></button>
+                                </div>
+                            </form>
+                        </div>
+                            <table class="layui-table layui-form">
+                                <thead>
+                                    <tr>
+					                	<th>时间</th>
+					                    <th>注册人数</th>
+					                    <th>订购券盈利</th>
+					                    <th>充值人数</th>
+					                    <th>充值金额</th>
+					                    <th>平仓笔数</th>
+					                    <th>手续费</th>
+					                    <th>预定总盈亏</th>
+					                    <th>退订总盈亏</th>
+					                    <th>交易总人数</th>
+					                    <th>交易保证金</th>
+					                    <th>现金交易人数</th>
+					                    <th>操作</th>
+					                </tr>
+                                </thead>
+                                <tbody>
+                                	<c:forEach items="${firstInfoPoList}" var="item">
+	                                   <tr>
+			                    			<td>${item.dayTime}</td>
+						                    <td>${item.regiestNum}</td>
+					                        <td>${item.ticketProfit}</td>
+					                        <td>${item.rechargeNum}</td>
+					                        <td>${item.rechargeMoney}</td>
+					                        <td>${item.closeOutNum}</td>
+					                        <td>${item.fee}</td>
+					                        <td>${item.scheduledTotal}</td>
+					                        <td>${item.unsubscribeTotal}</td>
+					                        <td>${item.unsubscribeNum}</td>
+					                        <td>${item.unsubscribeMoney}</td>
+					                        <td>${item.moneyNum}</td>
+					                        <td class="td-manage">
+			                                    <a title="编辑"  onclick="xadmin.open('编辑','/tz/admin/editfirstadminshow?id=${item.id}')" href="javascript:;">
+			                                      <i class="layui-icon">&#xe642;</i>
+			                                    </a>
+			                                  </td>
+				                    	</tr>
+                                   </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>layui.use(['laydate', 'form'],
+        function() {
+            var laydate = layui.laydate;
 
-</div>
-<script src="${path}/commons/js/jquery.min.js"></script>
-<script src="${path}/commons/js/flatpickr.min.js"></script>
-<script src="${path}/commons/js/laydate.js"></script>
-<script>
-	function search(){
-		var date = $("#date").val();
-		var endDate = $("#endDate").val();
-		window.location.href ="/tz/admin/first?startTime="+date+"&endTime="+endDate;
-		
-		 /* $.ajax({
- 			type : "POST",
- 			url : "/channeldetailed/view",
- 			dataType : "json",
- 			data : {
- 				"date":date
- 			},
- 			success : function(res) {
- 				if(res.success){
- 					alert("ss");
- 				}else{
- 					alert(res.msg);
- 				}
- 			},
- 			error : function(data) {
- 				alert("登录失败");
- 			} 
- 		}); */
-	}
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#start' //指定元素
+            });
 
-    var app = new Vue({
-        el: '#app',
-        created() {
-            setTimeout(() => {
-                let _this = this
-                //日期范围限制
-                var start = {
-                    elem: '#date',
-                    format: 'YYYY-MM-DD',
-                    max: '2099-06-16 23:59:59', //最大日期
-                    istime: true,
-                    istoday: false,
-                    choose: function (datas) {
-                        _this.date = datas;
-                    }
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#end' //指定元素
+            });
+        });
+
+        /*用户-停用*/
+        function member_stop(obj, id) {
+            layer.confirm('确认要停用吗？',
+            function(index) {
+
+                if ($(obj).attr('title') == '启用') {
+
+                    //发异步把用户状态进行更改
+                    $(obj).attr('title', '停用');
+                    $(obj).find('i').html('&#xe62f;');
+
+                    $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+                    layer.msg('已停用!', {
+                        icon: 5,
+                        time: 1000
+                    });
+
+                } else {
+                    $(obj).attr('title', '启用');
+                    $(obj).find('i').html('&#xe601;');
+
+                    $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+                    layer.msg('已启用!', {
+                        icon: 5,
+                        time: 1000
+                    });
                 }
-                laydate(start);
-              //日期范围限制
-                var end = {
-                    elem: '#endDate',
-                    format: 'YYYY-MM-DD',
-                    max: '2099-06-16 23:59:59', //最大日期
-                    istime: true,
-                    istoday: false,
-                    choose: function (datas) {
-                        _this.date = datas;
-                    }
-                }
-                laydate(end);
-            }, 20)
-            //this._getData()
-        },
-        data() {
-            return {
-                date: '',
-                list: []
-            }
-        },
-        methods: {
-            _getData() {
-                let params = window.Qs.stringify({'linkId': getCookie("linkId")})
-                axios.post('/tz/first', params)
-                .then((res) => {
-                    this.list = res.data
-                    console.log(this.list);
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-            },
-            goSearch() {
-                if (!this.date) {
-                    return
-                }
-                let date = this.date
-                let params = window.Qs.stringify({'linkId': getCookie("linkId"),"startDate":date})
-                axios.post('/register/sub/view', params)
-                .then((res) => {
-                    this.list = res.data
 
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-            }
+            });
         }
-    }) 
 
-    //     // 获取Cookie
-    //     function getCookie(name) {
-    //         if (name != null) {
-    //             var value = new RegExp("(?:^|; )" + encodeURIComponent(String(name)) + "=([^;]*)").exec(document.cookie);
-    //             return value ? decodeURIComponent(value[1]) : null;
-    //         }
-    //     }
-    // });
-    //读取cookies
-    function getCookie(name){
-        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)"); //正则匹配
-        if(arr=document.cookie.match(reg)){
-            return unescape(arr[2]);
+        /*用户-删除*/
+        function member_del(obj, id) {
+            layer.confirm('确认要删除吗？',
+            function(index) {
+                //发异步删除数据
+                $(obj).parents("tr").remove();
+                layer.msg('已删除!', {
+                    icon: 1,
+                    time: 1000
+                });
+            });
         }
-        else{
-            return null;
-        }
-    }
-</script>
-</body>
+
+        function delAll(argument) {
+
+            var data = tableCheck.getData();
+
+            layer.confirm('确认要删除吗？' + data,
+            function(index) {
+                //捉到所有被选中的，发异步进行删除
+                layer.msg('删除成功', {
+                    icon: 1
+                });
+                $(".layui-form-checked").not('.header').parents('tr').remove();
+            });
+        }</script>
 </html>

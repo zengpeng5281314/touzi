@@ -73,7 +73,7 @@
                             <i class="iconfont nav_right">&#xe697;</i></a>
                     </li>
                     <li>
-                        <a href="javascript:;" onclick="xadmin.add_tab('后台历史记录','${path}/tz/admin/first')">
+                        <a href="javascript:;" onclick="xadmin.add_tab('后台历史记录','${path}/tz/admin/history')">
                             <i class="iconfont left-nav-li" lay-tips="后台历史记录">&#xe723;</i>
                             <cite>后台历史记录</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>

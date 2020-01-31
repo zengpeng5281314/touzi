@@ -66,7 +66,7 @@
                                 	<c:forEach items="${firstInfoPoList}" var="item">
 	                                   <tr>
 			                    			<td>${item.dayTime}</td>
-						                    <td>${item.rechargeNum}</td>
+						                    <td>${item.regiestNum}</td>
 					                        <td>${item.ticketProfit}</td>
 					                        <td>${item.rechargeNum}</td>
 					                        <td>${item.rechargeMoney}</td>
@@ -78,7 +78,7 @@
 					                        <td>${item.unsubscribeMoney}</td>
 					                        <td>${item.moneyNum}</td>
 					                        <td class="td-manage">
-			                                    <a title="编辑"  onclick="xadmin.open('编辑','/channelDetailed/editchanneldetailedshow?id=${item.id}')" href="javascript:;">
+			                                    <a title="编辑"  onclick="xadmin.open('编辑','/tz/admin/editfirstadminshow?id=${item.id}')" href="javascript:;">
 			                                      <i class="layui-icon">&#xe642;</i>
 			                                    </a>
 			                                  </td>
