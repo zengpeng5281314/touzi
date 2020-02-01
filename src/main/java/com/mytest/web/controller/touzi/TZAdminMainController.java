@@ -129,8 +129,15 @@ public class TZAdminMainController extends BaseController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date = sdf.format(new Date(System.currentTimeMillis()));
 		String date2 = sdf.format(firstInfoPo.getDayTime());
-		if(!date.equals(date2))
+		if (!date.equals(date2))
 			return errorJson("非当天数据，禁止录入");
+
+		THistoryInfoPo historyInfoPo = historyInfoService.getTHistoryInfoPo(new Date(new java.util.Date().getTime()));
+		if (firstInfoPo.getRegiestNum() < regiestNum && historyInfoPo.getRegiestNum() < regiestNum) {
+			historyInfoPo.setRegiestNum(regiestNum);
+			historyInfoService.updateTHistoryInfoPo(historyInfoPo);
+			firstInfoPo.setRegiestNum(regiestNum);
+		}
 		if (firstInfoPo.getTicketProfit() < ticketProfit)
 			firstInfoPo.setTicketProfit(ticketProfit);
 		if (firstInfoPo.getRechargeNum() < rechargeNum)
@@ -191,7 +198,8 @@ public class TZAdminMainController extends BaseController {
 
 	@RequestMapping("/edithistoryshow")
 	@Transactional
-	public ModelAndView edithistoryshow(@RequestParam(defaultValue = "0", required = false, value = "historyInfoPoid") long historyInfoPoid,
+	public ModelAndView edithistoryshow(
+			@RequestParam(defaultValue = "0", required = false, value = "historyInfoPoid") long historyInfoPoid,
 			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
 		TUserInfoPo userInfoPo = (TUserInfoPo) request.getAttribute("adminInfo");
 		// userId = userInfoPo.getId();
@@ -222,16 +230,20 @@ public class TZAdminMainController extends BaseController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date = sdf.format(new Date(System.currentTimeMillis()));
 		String date2 = sdf.format(historyInfoPo.getDayTime());
-		if(!date.equals(date2))
+		if (!date.equals(date2))
 			return errorJson("非当天数据，禁止录入");
+		TFirstInfoPo firstInfoPo = firstInfoService.getFTFirstInfoPo(new Date(new java.util.Date().getTime()));
+		if (firstInfoPo.getRegiestNum() < regiestNum && historyInfoPo.getRegiestNum() < regiestNum) {
+			historyInfoPo.setRegiestNum(regiestNum);
+			firstInfoPo.setRegiestNum(regiestNum);
+			firstInfoService.updateTFirstInfoPo(firstInfoPo);
+		}
 		if (historyInfoPo.getMoneyRechargeNum() < moneyRechargeNum)
 			historyInfoPo.setMoneyRechargeNum(moneyRechargeNum);
 		if (historyInfoPo.getFristMoney() < fristMoney)
 			historyInfoPo.setFristMoney(fristMoney);
 		if (historyInfoPo.getFristNum() < fristNum)
 			historyInfoPo.setFristNum(fristNum);
-		if (historyInfoPo.getRegiestNum() < regiestNum)
-			historyInfoPo.setRegiestNum(regiestNum);
 		if (historyInfoPo.getUseTicktNum() < useTicktNum)
 			historyInfoPo.setUseTicktNum(useTicktNum);
 		historyInfoPo.setUpdateTime(new Timestamp(System.currentTimeMillis()));

@@ -1,6 +1,8 @@
 package com.mytest.admin.service;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,4 +37,14 @@ public class FirstInfoService {
 		mBeanDAO.saveOrUpdate(firstInfoPo);
 	}
 	
+	public TFirstInfoPo getFTFirstInfoPo(Date dayTime){
+		MParam mparam1 = new MParam();
+		mparam1.add("status", 1);
+		mparam1.add("dayTime", dayTime);
+		List<TFirstInfoPo> list = mFrameworkService.list(TFirstInfoPo.class, mparam1);
+		if (list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
 }
