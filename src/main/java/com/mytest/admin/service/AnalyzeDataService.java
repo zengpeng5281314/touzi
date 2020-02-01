@@ -98,10 +98,15 @@ public class AnalyzeDataService {
 			t.setFee(totalFee);
 			t.setFeeRate(1.00d);
 			t.setScheduledTotal(totalProfitLoss);
+			t.setScheduledTotalRate(1.00d);
 			t.setUnsubscribeTotal(closeTotalProfitLoss);
+			t.setUnsubscribeTotalRate(1.00d);
 			t.setUnsubscribeNum(orderUsers);
+			t.setUnsubscribeNumRate(1.00d);
 			t.setUnsubscribeMoney(orderMoney);
+			t.setUnsubscribeMoneyRate(1.00d);
 			t.setMoneyNum(cashOrderUsers);
+			t.setMoneyNumRate(1.00d);
 			t.setCreateTime(new Timestamp(System.currentTimeMillis()));
 			t.setStatus(1);
 		}
