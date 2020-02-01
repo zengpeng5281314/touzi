@@ -86,7 +86,7 @@ public class ChannelDetaileTask {
 				for (int i = 1; i < 20; i++) {
 					// 会员列表
 					String mebersContent = doGet("https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex="
-							+ i + "&pageSize=100&startDate=" + startTime + "&endDate=" + endTime
+							+ i + "&pageSize=50&startDate=" + startTime + "&endDate=" + endTime
 							+ "&phone=&regChannel=ALL", sef);
 					analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
 
