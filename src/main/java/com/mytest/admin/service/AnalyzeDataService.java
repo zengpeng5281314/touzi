@@ -209,6 +209,7 @@ public class AnalyzeDataService {
 			historyInfoPo.setFristNum(rechargeUsers);
 		if (historyInfoPo.getRegiestNum() < registerCount)
 			historyInfoPo.setRegiestNum(registerCount);
+		historyInfoPo.setRegiestNumRate(1.00d);
 		if (historyInfoPo.getUseTicktNum() < ticketUsers)
 			historyInfoPo.setUseTicktNum(ticketUsers);
 
