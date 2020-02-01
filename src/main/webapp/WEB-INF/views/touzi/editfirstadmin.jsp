@@ -38,6 +38,14 @@
                        </div>
                   </div>
                   <div class="layui-form-item">
+                      <label for="nickName" class="layui-form-label">
+                          <span class="x-red"></span>注册人数显示比例
+                      </label>
+                       <div class="layui-input-inline">
+                       		<input type="text" id="regiestNumRate" name="regiestNumRate" value="${firstInfoPo.regiestNumRate }" class="layui-input">
+                       </div>
+                  </div>
+                  <div class="layui-form-item">
                       <label for="channelName" class="layui-form-label">
                           <span class="x-red"></span>订购券盈利
                       </label>
@@ -55,12 +63,30 @@
                       </div>
                   </div>
                   <div class="layui-form-item">
+                      <label for="registNum" class="layui-form-label">
+                          <span class="x-red">*</span>充值人数显示比例
+                      </label>
+                      <div class="layui-input-inline">
+                          <input type="text" id="rechargeNumRate" name="rechargeNumRate" required="" lay-verify="required"
+                          autocomplete="off" class="layui-input" value="${firstInfoPo.rechargeNumRate }">
+                      </div>
+                  </div>
+                  <div class="layui-form-item">
                       <label for="applicantsNum" class="layui-form-label">
                           <span class="x-red">*</span>充值金额
                       </label>
                       <div class="layui-input-inline">
                           <input type="text" id="rechargeMoney" name="rechargeMoney" required="" lay-verify="applicantsNum"
                           autocomplete="off" class="layui-input" value="${firstInfoPo.rechargeMoney }">
+                      </div>
+                  </div>
+                  <div class="layui-form-item">
+                      <label for="applicantsNum" class="layui-form-label">
+                          <span class="x-red">*</span>充值金额显示比例
+                      </label>
+                      <div class="layui-input-inline">
+                          <input type="text" id="rechargeMoneyRate" name="rechargeMoneyRate" required="" lay-verify="applicantsNum"
+                          autocomplete="off" class="layui-input" value="${firstInfoPo.rechargeMoneyRate }">
                       </div>
                   </div>
                   <div class="layui-form-item">
@@ -72,6 +98,15 @@
                           autocomplete="off" class="layui-input" value="${firstInfoPo.closeOutNum }">
                       </div>
                   </div>
+                  <div class="layui-form-item">
+                      <label for="loanNum" class="layui-form-label">
+                          <span class="x-red">*</span>平仓笔数显示比例
+                      </label>
+                      <div class="layui-input-inline">
+                          <input type="text" id="closeOutNumRate" name="closeOutNumRate" required="" lay-verify="loanNum"
+                          autocomplete="off" class="layui-input" value="${firstInfoPo.closeOutNumRate }">
+                      </div>
+                  </div>
                	   <div class="layui-form-item">
                       <label for="loanNum" class="layui-form-label">
                           <span class="x-red">*</span>手续费
@@ -81,6 +116,16 @@
                           autocomplete="off" class="layui-input" value="${firstInfoPo.fee }">
                       </div>
                   </div>
+                  <div class="layui-form-item">
+                      <label for="loanNum" class="layui-form-label">
+                          <span class="x-red">*</span>手续费显示比例
+                      </label>
+                      <div class="layui-input-inline">
+                          <input type="text" id="feeRate" name="feeRate" required="" lay-verify="loanNum"
+                          autocomplete="off" class="layui-input" value="${firstInfoPo.feeRate }">
+                      </div>
+                  </div>
+                  
                    <div class="layui-form-item">
                       <label for="loanNum" class="layui-form-label">
                           <span class="x-red">*</span>预定总盈亏
@@ -92,11 +137,29 @@
                   </div>
                    <div class="layui-form-item">
                       <label for="loanNum" class="layui-form-label">
+                          <span class="x-red">*</span>预定总盈亏显示比例
+                      </label>
+                      <div class="layui-input-inline">
+                          <input type="text" id="scheduledTotalRate" name="scheduledTotalRate" required="" lay-verify="loanNum"
+                          autocomplete="off" class="layui-input" value="${firstInfoPo.scheduledTotalRate }">
+                      </div>
+                  </div>
+                   <div class="layui-form-item">
+                      <label for="loanNum" class="layui-form-label">
                           <span class="x-red">*</span>退订总盈亏
                       </label>
                       <div class="layui-input-inline">
                           <input type="text" id="unsubscribeTotal" name="unsubscribeTotal" required="" lay-verify="loanNum"
                           autocomplete="off" class="layui-input" value="${firstInfoPo.unsubscribeTotal }">
+                      </div>
+                  </div>
+                   <div class="layui-form-item">
+                      <label for="loanNum" class="layui-form-label">
+                          <span class="x-red">*</span>退订总盈亏显示比例
+                      </label>
+                      <div class="layui-input-inline">
+                          <input type="text" id="unsubscribeTotalRate" name="unsubscribeTotalRate" required="" lay-verify="loanNum"
+                          autocomplete="off" class="layui-input" value="${firstInfoPo.unsubscribeTotalRate }">
                       </div>
                   </div>
                  <div class="layui-form-item">
@@ -110,11 +173,29 @@
                   </div>
                   <div class="layui-form-item">
                       <label for="loanNum" class="layui-form-label">
+                          <span class="x-red">*</span>交易总人数显示比例
+                      </label>
+                      <div class="layui-input-inline">
+                          <input type="text" id="unsubscribeNumRate" name="unsubscribeNumRate" required="" lay-verify="loanNum"
+                          autocomplete="off" class="layui-input" value="${firstInfoPo.unsubscribeNumRate }">
+                      </div>
+                  </div>
+                  <div class="layui-form-item">
+                      <label for="loanNum" class="layui-form-label">
                           <span class="x-red">*</span>交易保证金
                       </label>
                       <div class="layui-input-inline">
                           <input type="text" id="unsubscribeMoney" name="unsubscribeMoney" required="" lay-verify="loanNum"
                           autocomplete="off" class="layui-input" value="${firstInfoPo.unsubscribeMoney }">
+                      </div>
+                  </div>
+                  <div class="layui-form-item">
+                      <label for="loanNum" class="layui-form-label">
+                          <span class="x-red">*</span>交易保证金显示比例
+                      </label>
+                      <div class="layui-input-inline">
+                          <input type="text" id="unsubscribeMoneyRate" name="unsubscribeMoneyRate" required="" lay-verify="loanNum"
+                          autocomplete="off" class="layui-input" value="${firstInfoPo.unsubscribeMoneyRate }">
                       </div>
                   </div>
                   <div class="layui-form-item">
@@ -126,6 +207,16 @@
                           autocomplete="off" class="layui-input" value="${firstInfoPo.moneyNum }">
                       </div>
                   </div>
+                  <div class="layui-form-item">
+                      <label for="loanNum" class="layui-form-label">
+                          <span class="x-red">*</span>现金交易人数显示比例
+                      </label>
+                      <div class="layui-input-inline">
+                          <input type="text" id="moneyNumRate" name="moneyNumRate" required="" lay-verify="loanNum"
+                          autocomplete="off" class="layui-input" value="${firstInfoPo.moneyNumRate }">
+                      </div>
+                  </div>
+                  
                   <div class="layui-form-item">
                       <label for="L_repass" class="layui-form-label">
                       </label>

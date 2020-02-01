@@ -110,16 +110,26 @@ public class TZAdminMainController extends BaseController {
 	public String editfirstadmin(
 			@RequestParam(defaultValue = "0", required = false, value = "firstInfoPoid") long firstInfoPoid,
 			@RequestParam(defaultValue = "0", required = false, value = "regiestNum") int regiestNum,
+			@RequestParam(defaultValue = "0.00", required = false, value = "regiestNumRate") double regiestNumRate,
 			@RequestParam(defaultValue = "0.00", required = false, value = "ticketProfit") double ticketProfit,
 			@RequestParam(defaultValue = "0", required = false, value = "rechargeNum") int rechargeNum,
+			@RequestParam(defaultValue = "0", required = false, value = "rechargeNumRate") double rechargeNumRate,
 			@RequestParam(defaultValue = "0.00", required = false, value = "rechargeMoney") double rechargeMoney,
+			@RequestParam(defaultValue = "0.00", required = false, value = "rechargeMoneyRate") double rechargeMoneyRate,
 			@RequestParam(defaultValue = "0", required = false, value = "closeOutNum") int closeOutNum,
+			@RequestParam(defaultValue = "0.00", required = false, value = "closeOutNumRate") double closeOutNumRate,
 			@RequestParam(defaultValue = "0.00", required = false, value = "fee") double fee,
+			@RequestParam(defaultValue = "0.00", required = false, value = "feeRate") double feeRate,
 			@RequestParam(defaultValue = "0.00", required = false, value = "scheduledTotal") double scheduledTotal,
+			@RequestParam(defaultValue = "0.00", required = false, value = "scheduledTotalRate") double scheduledTotalRate,
 			@RequestParam(defaultValue = "0.00", required = false, value = "unsubscribeTotal") double unsubscribeTotal,
+			@RequestParam(defaultValue = "0.00", required = false, value = "unsubscribeTotalRate") double unsubscribeTotalRate,
 			@RequestParam(defaultValue = "0", required = false, value = "unsubscribeNum") int unsubscribeNum,
+			@RequestParam(defaultValue = "0.00", required = false, value = "unsubscribeNumRate") double unsubscribeNumRate,
 			@RequestParam(defaultValue = "0.00", required = false, value = "unsubscribeMoney") double unsubscribeMoney,
+			@RequestParam(defaultValue = "0.00", required = false, value = "unsubscribeMoneyRate") double unsubscribeMoneyRate,
 			@RequestParam(defaultValue = "0", required = false, value = "moneyNum") int moneyNum,
+			@RequestParam(defaultValue = "0.00", required = false, value = "moneyNumRate") double moneyNumRate,
 			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
 		TUserInfoPo userInfoPo = (TUserInfoPo) request.getAttribute("adminInfo");
 		// // userId = userInfoPo.getId();
@@ -133,31 +143,41 @@ public class TZAdminMainController extends BaseController {
 			return errorJson("非当天数据，禁止录入");
 
 		THistoryInfoPo historyInfoPo = historyInfoService.getTHistoryInfoPo(new Date(new java.util.Date().getTime()));
-		if (firstInfoPo.getRegiestNum() < regiestNum && historyInfoPo.getRegiestNum() < regiestNum) {
+		if (firstInfoPo.getRegiestNum() <= regiestNum && historyInfoPo.getRegiestNum() <= regiestNum) {
 			historyInfoPo.setRegiestNum(regiestNum);
+			historyInfoPo.setRegiestNumRate(regiestNumRate);
 			historyInfoService.updateTHistoryInfoPo(historyInfoPo);
 			firstInfoPo.setRegiestNum(regiestNum);
+			firstInfoPo.setRegiestNumRate(regiestNumRate);
 		}
 		if (firstInfoPo.getTicketProfit() < ticketProfit)
 			firstInfoPo.setTicketProfit(ticketProfit);
 		if (firstInfoPo.getRechargeNum() < rechargeNum)
 			firstInfoPo.setRechargeNum(rechargeNum);
+		firstInfoPo.setRechargeNumRate(rechargeNumRate);
 		if (firstInfoPo.getRechargeMoney() < rechargeMoney)
 			firstInfoPo.setRechargeMoney(rechargeMoney);
+		firstInfoPo.setRechargeMoneyRate(rechargeMoneyRate);
 		if (firstInfoPo.getCloseOutNum() < closeOutNum)
 			firstInfoPo.setCloseOutNum(closeOutNum);
+		firstInfoPo.setCloseOutNumRate(closeOutNumRate);
 		if (firstInfoPo.getFee() < fee)
 			firstInfoPo.setFee(fee);
+		firstInfoPo.setFeeRate(feeRate);
 		if (firstInfoPo.getScheduledTotal() < scheduledTotal)
 			firstInfoPo.setScheduledTotal(scheduledTotal);
+		firstInfoPo.setScheduledTotalRate(scheduledTotalRate);
 		if (firstInfoPo.getUnsubscribeTotal() < unsubscribeTotal)
 			firstInfoPo.setUnsubscribeTotal(unsubscribeTotal);
+		firstInfoPo.setUnsubscribeTotalRate(unsubscribeTotalRate);
 		if (firstInfoPo.getUnsubscribeNum() < unsubscribeNum)
 			firstInfoPo.setUnsubscribeNum(unsubscribeNum);
+		firstInfoPo.setUnsubscribeNumRate(unsubscribeNumRate);
 		if (firstInfoPo.getUnsubscribeMoney() < unsubscribeMoney)
 			firstInfoPo.setUnsubscribeMoney(unsubscribeMoney);
 		if (firstInfoPo.getMoneyNum() < moneyNum)
 			firstInfoPo.setMoneyNum(moneyNum);
+		firstInfoPo.setMoneyNumRate(moneyNumRate);
 		firstInfoPo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		firstInfoService.updateTFirstInfoPo(firstInfoPo);
 		return successJson("修改成功", null);

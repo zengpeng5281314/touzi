@@ -227,16 +227,17 @@ public class TZMainController extends BaseController {
 		List<TFirstInfoPo> list = (List<TFirstInfoPo>) pageList.getList();
 		TFirstInfoPo tfp = new TFirstInfoPo();
 		for (TFirstInfoPo tFirstInfoPo : list) {
-			tfp.setCloseOutNum(tfp.getCloseOutNum() + tFirstInfoPo.getCloseOutNum());
-			tfp.setFee(Arith.add(tfp.getFee(), tFirstInfoPo.getFee()));
-			tfp.setMoneyNum(tfp.getMoneyNum() + tFirstInfoPo.getMoneyNum());
-			tfp.setRechargeMoney(Arith.add(tfp.getRechargeMoney(), tFirstInfoPo.getRechargeMoney()));
-			tfp.setRechargeNum(tfp.getRechargeNum() + tFirstInfoPo.getRechargeNum());
-			tfp.setScheduledTotal(Arith.add(tfp.getScheduledTotal(), tFirstInfoPo.getScheduledTotal()));
+			tfp.setRegiestNum(tfp.getRegiestNum() + Arith.mulInt(tFirstInfoPo.getRegiestNum(), tFirstInfoPo.getRegiestNumRate()));
+			tfp.setCloseOutNum(tfp.getCloseOutNum() + Arith.mulInt(tFirstInfoPo.getCloseOutNum(), tFirstInfoPo.getCloseOutNumRate()));
+			tfp.setFee(Arith.add(tfp.getFee(), Arith.mul(tFirstInfoPo.getFee(),tFirstInfoPo.getFeeRate())));
+			tfp.setMoneyNum(tfp.getMoneyNum() + Arith.mulInt(tFirstInfoPo.getMoneyNum(),tFirstInfoPo.getMoneyNumRate()));
+			tfp.setRechargeMoney(Arith.add(tfp.getRechargeMoney(), Arith.mul(tFirstInfoPo.getRechargeMoney(),tFirstInfoPo.getRechargeMoneyRate())));
+			tfp.setRechargeNum(tfp.getRechargeNum() + Arith.mulInt(tFirstInfoPo.getRechargeNum(),tFirstInfoPo.getRechargeNumRate()));
+			tfp.setScheduledTotal(Arith.add(tfp.getScheduledTotal(), Arith.mul(tFirstInfoPo.getScheduledTotal(),tFirstInfoPo.getScheduledTotalRate())));
 			tfp.setTicketProfit(Arith.add(tfp.getTicketProfit(), tFirstInfoPo.getTicketProfit()));
-			tfp.setUnsubscribeMoney(Arith.add(tfp.getUnsubscribeMoney(), tFirstInfoPo.getUnsubscribeMoney()));
-			tfp.setUnsubscribeNum(tfp.getUnsubscribeNum() + tFirstInfoPo.getUnsubscribeNum());
-			tfp.setUnsubscribeTotal(Arith.add(tfp.getUnsubscribeTotal(), tFirstInfoPo.getUnsubscribeTotal()));
+			tfp.setUnsubscribeMoney(Arith.add(tfp.getUnsubscribeMoney(), Arith.mul(tFirstInfoPo.getUnsubscribeMoney(),tFirstInfoPo.getUnsubscribeMoneyRate())));
+			tfp.setUnsubscribeNum(tfp.getUnsubscribeNum() + Arith.mulInt(tFirstInfoPo.getUnsubscribeNum(),tFirstInfoPo.getUnsubscribeNumRate()));
+			tfp.setUnsubscribeTotal(Arith.add(tfp.getUnsubscribeTotal(), Arith.mul(tFirstInfoPo.getUnsubscribeTotal(),tFirstInfoPo.getUnsubscribeTotalRate())));
 		}
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
@@ -319,7 +320,7 @@ public class TZMainController extends BaseController {
 			historyDTO.setFristMoney(Arith.add(historyDTO.getFristMoney(), tHistoryInfoPo.getFristMoney()));
 			historyDTO.setFristNum(historyDTO.getFristNum() + tHistoryInfoPo.getFristNum());
 			historyDTO.setMoneyRechargeNum(historyDTO.getMoneyRechargeNum() + tHistoryInfoPo.getMoneyRechargeNum());
-			historyDTO.setRegiestNum(historyDTO.getRegiestNum() + tHistoryInfoPo.getRegiestNum());
+			historyDTO.setRegiestNum(historyDTO.getRegiestNum() + Arith.mulInt(tHistoryInfoPo.getRegiestNum(), tHistoryInfoPo.getRegiestNumRate()) );
 			historyDTO.setUseTicktNum(historyDTO.getUseTicktNum() + tHistoryInfoPo.getUseTicktNum());
 		}
 		historyDTO.updateRate();

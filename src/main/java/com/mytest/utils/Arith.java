@@ -119,9 +119,19 @@ public class Arith {
         return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).doubleValue();  
     }  
     
+    /**
+     * 乘法 返回int类型
+     * @param v
+     * @param v2
+     * @return
+     */
+    public static int mulInt(double v,double v2){
+    	return (int)round(mul(v, v2),0);
+    }
+    
     public static void main(String[] args) {
-		int i =2;
-		int j=20;
-		System.out.println(div(i, j, 2));
+		int i =50;
+		double j=0.8;
+		System.out.println(mulInt(i,j));
 	}
 }
