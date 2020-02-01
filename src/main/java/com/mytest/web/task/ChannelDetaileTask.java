@@ -1,6 +1,7 @@
 //package com.mytest.web.task;
 //
 //import java.text.SimpleDateFormat;
+//import java.util.Calendar;
 //import java.util.Date;
 //import java.util.List;
 //
@@ -40,7 +41,7 @@
 //	/**
 //	 * 每1分钟执行一次
 //	 */
-//	@Scheduled(cron = "0 */1 * * * ?")
+//	@Scheduled(cron = "0 */5 * * * ?")
 //	public void flushChannelDetaile() {
 //		List<TXZDownUserInfoPo> list = downLoadUserInfoService.allTXZDownUserInfoPoList(1);
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -68,20 +69,67 @@
 //				System.out.println(sef);
 //				sef = "Bearer " + sef;
 //
-//				// 首页
-//				String fristContent = doGet("https://api.dsxzt.com/admin/access/v1/statistics/index?pageIndex=0&pageSize=10000&regChannel=ALL&startDate="+date+"&endDate=",
-//						sef);
-//				analyzeDataService.analyzeTFirstInfoPoList(fristContent);
-//				// 会员列表
-//				String mebersContent = doGet("https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex=1&pageSize=100&startDate="+date+"&endDate=&phone=&regChannel=ALL",
-//						sef);
-//				analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
-//				
-//				
-//				// 历史数据
-//				String historyContent = doGet("https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate="+date+"&endDate=",
-//						sef);
-//				analyzeDataService.analyzeHistoryInfoPoList(historyContent);
+//				// 起始时间
+//				String str = "2019-11-24";
+//				// 结束时间
+//				String str1 = "2019-11-26";
+//				Calendar start = Calendar.getInstance();
+//				Calendar end = Calendar.getInstance();
+//				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//				try {
+//					start.setTime(format.parse(str));
+//					end.setTime(format.parse(str1));
+//				} catch (java.text.ParseException e) {
+//					e.printStackTrace();
+//				}
+//				while (start.before(end)) {
+//					String startTime = format.format(start.getTime());
+//					System.out.println(startTime);
+//					start.add(Calendar.DAY_OF_MONTH, 1);
+//					String endTime = format.format(start.getTime());
+//					System.out.println(endTime);
+//
+//					// 首页
+//					String fristContent = doGet(
+//							"https://api.dsxzt.com/admin/access/v1/statistics/index?pageIndex=0&pageSize=10000&regChannel=ALL&startDate="
+//									+ startTime + "&endDate="+endTime,
+//							sef);
+//					analyzeDataService.analyzeTFirstInfoPoList(fristContent,new java.sql.Date(start.getTime().getTime()));
+//					// 会员列表
+//					String mebersContent = doGet(
+//							"https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex=1&pageSize=3000&startDate="
+//									+ startTime + "&endDate="+endTime+"&phone=&regChannel=ALL",
+//							sef);
+//					analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
+//
+//					// 历史数据
+//					String historyContent = doGet(
+//							"https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate="
+//									+ startTime + "&endDate="+endTime,
+//							sef);
+//					analyzeDataService.analyzeHistoryInfoPoList(historyContent,new java.sql.Date(start.getTime().getTime()));
+//
+//				}
+//
+//				// // 首页
+//				// String fristContent = doGet(
+//				// "https://api.dsxzt.com/admin/access/v1/statistics/index?pageIndex=0&pageSize=10000&regChannel=ALL&startDate="
+//				// + date + "&endDate=",
+//				// sef);
+//				// analyzeDataService.analyzeTFirstInfoPoList(fristContent);
+//				// // 会员列表
+//				// String mebersContent = doGet(
+//				// "https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex=1&pageSize=100&startDate="
+//				// + date + "&endDate=&phone=&regChannel=ALL",
+//				// sef);
+//				// analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
+//				//
+//				// // 历史数据
+//				// String historyContent = doGet(
+//				// "https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate="
+//				// + date + "&endDate=",
+//				// sef);
+//				// analyzeDataService.analyzeHistoryInfoPoList(historyContent);
 //
 //				driver.quit();
 //			} catch (Throwable e11) {
@@ -124,4 +172,25 @@
 //		return null;
 //	}
 //
+//	public static void main(String[] args) {
+//		// 起始时间
+//		String str = "2019-11-24";
+//		// 结束时间
+//		String str1 = "2020-01-30";
+//		Calendar start = Calendar.getInstance();
+//		Calendar end = Calendar.getInstance();
+//		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//		try {
+//		    start.setTime(format.parse(str));
+//		    end.setTime(format.parse(str1));
+//		  } catch (java.text.ParseException e) {
+//		    e.printStackTrace();
+//		  }
+//		  while(start.before(end))
+//		  {
+//		      System.out.println(format.format(start.getTime()));
+//		      start.add(Calendar.DAY_OF_MONTH,1);
+//		      System.out.println(format.format(start.getTime()));
+//		  }
+//	}
 //}

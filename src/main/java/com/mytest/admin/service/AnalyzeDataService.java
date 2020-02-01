@@ -36,7 +36,7 @@ public class AnalyzeDataService {
 		return mFrameworkService.listAll(TXZDownUserInfoPo.class, mparam);
 	}
 
-	public void analyzeTFirstInfoPoList(String content) {
+	public void analyzeTFirstInfoPoList(String content, Date dayTime) {
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd HH:mm:ss"));
 		JSONObject json = JSONObject.fromObject(content, jsonConfig);
@@ -53,7 +53,6 @@ public class AnalyzeDataService {
 		int orderUsers = data.getInt("orderUsers");
 		double orderMoney = Double.valueOf(data.getString("orderMoney"));
 		int cashOrderUsers = data.getInt("cashOrderUsers");
-		Date dayTime = new Date(new java.util.Date().getTime());
 		MParam mparam = new MParam();
 		mparam.add("status", 1);
 		mparam.add("dayTime", dayTime);
@@ -86,6 +85,7 @@ public class AnalyzeDataService {
 			t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		} else {
 			t = new TFirstInfoPo();
+			t.setRegiestNum(registerCount);
 			t.setDayTime(dayTime);
 			t.setTicketProfit(ticketProfitLoss);
 			t.setRechargeNum(rechargeUsers);
@@ -101,6 +101,19 @@ public class AnalyzeDataService {
 			t.setStatus(1);
 		}
 		mBeanDAO.saveOrUpdate(t);
+
+		MParam mparam1 = new MParam();
+		mparam1.add("status", 1);
+		mparam1.add("dayTime", dayTime);
+		List<TFirstInfoPo> list1 = mFrameworkService.list(TFirstInfoPo.class, mparam1);
+		if (list1 != null && list1.size() > 0) {
+			TFirstInfoPo firstInfoPo = list1.get(0);
+			if (firstInfoPo.getRegiestNum() < registerCount) {
+				firstInfoPo.setRegiestNum(registerCount);
+				mBeanDAO.saveOrUpdate(firstInfoPo);
+			}
+		}
+
 	}
 
 	public void analyzeTRegistUserInfoPoList(String registContent) {
@@ -138,12 +151,16 @@ public class AnalyzeDataService {
 			registUserInfoPo.setRegistTime(Timestamp.valueOf(createTime));
 			registUserInfoPo.setStatus(1);
 			registUserInfoPo.setTotal_money(totalRechargeMoney);
-			mBeanDAO.saveOrUpdate(registUserInfoPo);
+			try {
+				mBeanDAO.saveOrUpdate(registUserInfoPo);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 
 	}
 
-	public void analyzeHistoryInfoPoList(String historyContent) {
+	public void analyzeHistoryInfoPoList(String historyContent, Date dayTime) {
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd HH:mm:ss"));
 		JSONObject json = JSONObject.fromObject(historyContent, jsonConfig);
@@ -159,7 +176,7 @@ public class AnalyzeDataService {
 		int ticketUsers = totalStatistics.getInt("ticketUsers");
 		double totalFee = Double.valueOf(totalStatistics.getString("totalFee"));
 
-		Date dayTime = new Date(new java.util.Date().getTime());
+		// Date dayTime = new Date(new java.util.Date().getTime());
 		MParam mparam = new MParam();
 		mparam.add("status", 1);
 		mparam.add("dayTime", dayTime);
