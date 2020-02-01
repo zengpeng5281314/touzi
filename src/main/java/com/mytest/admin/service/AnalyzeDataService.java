@@ -86,12 +86,17 @@ public class AnalyzeDataService {
 		} else {
 			t = new TFirstInfoPo();
 			t.setRegiestNum(registerCount);
+			t.setRegiestNumRate(1.00d);
 			t.setDayTime(dayTime);
 			t.setTicketProfit(ticketProfitLoss);
 			t.setRechargeNum(rechargeUsers);
+			t.setRechargeNumRate(1.00d);
 			t.setRechargeMoney(rechargeMoney);
+			t.setRechargeMoneyRate(1.00d);
 			t.setCloseOutNum(closeOrderCount);
+			t.setCloseOutNumRate(1.00d);
 			t.setFee(totalFee);
+			t.setFeeRate(1.00d);
 			t.setScheduledTotal(totalProfitLoss);
 			t.setUnsubscribeTotal(closeTotalProfitLoss);
 			t.setUnsubscribeNum(orderUsers);

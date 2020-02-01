@@ -66,17 +66,17 @@
                                 	<c:forEach items="${firstInfoPoList}" var="item">
 	                                   <tr>
 			                    			<td>${item.dayTime}</td>
-						                    <td>${item.regiestNum}</td>
+						                    <td>${item.regiestNum}(${item.regiestNumRate })</td>
 					                        <td>${item.ticketProfit}</td>
-					                        <td>${item.rechargeNum}</td>
-					                        <td>${item.rechargeMoney}</td>
-					                        <td>${item.closeOutNum}</td>
-					                        <td>${item.fee}</td>
-					                        <td>${item.scheduledTotal}</td>
-					                        <td>${item.unsubscribeTotal}</td>
-					                        <td>${item.unsubscribeNum}</td>
-					                        <td>${item.unsubscribeMoney}</td>
-					                        <td>${item.moneyNum}</td>
+					                        <td>${item.rechargeNum}(${item.rechargeNumRate })</td>
+					                        <td>${item.rechargeMoney}(${item.rechargeMoneyRate })</td>
+					                        <td>${item.closeOutNum}(${item.closeOutNumRate })</td>
+					                        <td>${item.fee}(${item.feeRate })</td>
+					                        <td>${item.scheduledTotal}(${item.scheduledTotalRate })</td>
+					                        <td>${item.unsubscribeTotal}(${item.unsubscribeTotalRate })</td>
+					                        <td>${item.unsubscribeNum}(${item.unsubscribeNumRate })</td>
+					                        <td>${item.unsubscribeMoney}(${item.unsubscribeMoneyRate })</td>
+					                        <td>${item.moneyNum}(${item.moneyNumRate })</td>
 					                        <td class="td-manage">
 			                                    <a title="编辑"  onclick="xadmin.open('编辑','/tz/admin/editfirstadminshow?id=${item.id}')" href="javascript:;">
 			                                      <i class="layui-icon">&#xe642;</i>

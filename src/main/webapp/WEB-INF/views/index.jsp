@@ -30,7 +30,7 @@
         <!-- 顶部开始 -->
         <div class="container">
             <div class="logo">
-                <a href="javascript:;">用心做金融</a></div>
+                <a href="javascript:;">大师兄淘金</a></div>
             <div class="left_open">
                 <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
             </div>

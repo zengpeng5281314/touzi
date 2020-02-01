@@ -40,6 +40,8 @@ public class THistoryInfoPo extends MBeanBase implements Serializable {
 	private int fristNum;
 	@Column(name="regiest_num")
 	private int regiestNum;
+	@Column(name="regiest_num_rate")
+	private int regiestNumRate;
 	@Column(name="use_tickt_num")
 	private int useTicktNum;
 	@Column(name="createtime")
