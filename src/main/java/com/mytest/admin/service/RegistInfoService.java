@@ -22,8 +22,11 @@ public class RegistInfoService {
 	public Page pageRegistInfoInfoPo(Timestamp startTime, Timestamp endTime,
 			Page page) {
 		MParam mparam = new MParam();
+		String hql = "";
 		if (startTime != null && endTime != null)
-			mparam.setOrderbyHQL(" and registTime>='" + startTime + "' and registTime<='" + endTime + "'");
+			hql += " and registTime>='" + startTime + "' and registTime<='" + endTime + "' order by registTime desc";
+		hql += " order by registTime desc";
+		mparam.setOrderbyHQL(hql);
 		return mFrameworkService.listPageInfo(TRegistUserInfoPo.class, page, mparam);
 	}
 	

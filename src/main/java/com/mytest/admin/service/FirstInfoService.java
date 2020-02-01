@@ -20,24 +20,26 @@ public class FirstInfoService {
 	MBeanDAO mBeanDAO;
 	@Autowired
 	MFrameworkService mFrameworkService;
-	
-	public Page pageFirstInfoPo(Timestamp startTime, Timestamp endTime,
-			Page page) {
+
+	public Page pageFirstInfoPo(Timestamp startTime, Timestamp endTime, Page page) {
 		MParam mparam = new MParam();
+		String hql = "";
 		if (startTime != null && endTime != null)
-			mparam.setOrderbyHQL(" and dayTime>='" + startTime + "' and dayTime<='" + endTime + "'");
+			hql += " and dayTime>='" + startTime + "' and dayTime<='" + endTime + "' ";
+		hql += " order by dayTime desc";
+		mparam.setOrderbyHQL(hql);
 		return mFrameworkService.listPageInfo(TFirstInfoPo.class, page, mparam);
 	}
-	
-	public TFirstInfoPo getTFirstInfoPo(long id){
+
+	public TFirstInfoPo getTFirstInfoPo(long id) {
 		return mFrameworkService.get(TFirstInfoPo.class, String.valueOf(id));
 	}
-	
-	public void updateTFirstInfoPo(TFirstInfoPo firstInfoPo){
+
+	public void updateTFirstInfoPo(TFirstInfoPo firstInfoPo) {
 		mBeanDAO.saveOrUpdate(firstInfoPo);
 	}
-	
-	public TFirstInfoPo getFTFirstInfoPo(Date dayTime){
+
+	public TFirstInfoPo getFTFirstInfoPo(Date dayTime) {
 		MParam mparam1 = new MParam();
 		mparam1.add("status", 1);
 		mparam1.add("dayTime", dayTime);

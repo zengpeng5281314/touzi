@@ -25,8 +25,12 @@ public class HistoryInfoService {
 	public Page pageHistoryInfoInfoPo(Timestamp startTime, Timestamp endTime,
 			Page page) {
 		MParam mparam = new MParam();
+		String hql = "";
 		if (startTime != null && endTime != null)
-			mparam.setOrderbyHQL(" and dayTime>='" + startTime + "' and dayTime<='" + endTime + "'");
+			hql += " and dayTime>='" + startTime + "' and dayTime<='" + endTime + "' ";
+		hql += " order by dayTime desc";
+		mparam.setOrderbyHQL(hql);
+		
 		return mFrameworkService.listPageInfo(THistoryInfoPo.class, page, mparam);
 	}
 	
