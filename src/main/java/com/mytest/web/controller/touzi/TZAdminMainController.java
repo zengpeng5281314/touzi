@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,6 +82,9 @@ public class TZAdminMainController extends BaseController {
 		Page pageList = firstInfoService.pageFirstInfoPo(startT, endT, page);
 
 		List<TFirstInfoPo> list = (List<TFirstInfoPo>) pageList.getList();
+		for (TFirstInfoPo tFirstInfoPo : list) {
+			tFirstInfoPo.setFee(Arith.round(tFirstInfoPo.getFee(),0));
+		}
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
 		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor("yyyy-MM-dd"));
@@ -139,8 +143,8 @@ public class TZAdminMainController extends BaseController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date = sdf.format(new Date(System.currentTimeMillis()));
 		String date2 = sdf.format(firstInfoPo.getDayTime());
-		if (!date.equals(date2))
-			return errorJson("非当天数据，禁止录入");
+//		if (!date.equals(date2))
+//			return errorJson("非当天数据，禁止录入");
 
 		THistoryInfoPo historyInfoPo = historyInfoService.getTHistoryInfoPo(new Date(new java.util.Date().getTime()));
 		if (firstInfoPo.getRegiestNum() <= regiestNum && historyInfoPo.getRegiestNum() <= regiestNum) {
@@ -250,8 +254,8 @@ public class TZAdminMainController extends BaseController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date = sdf.format(new Date(System.currentTimeMillis()));
 		String date2 = sdf.format(historyInfoPo.getDayTime());
-		if (!date.equals(date2))
-			return errorJson("非当天数据，禁止录入");
+//		if (!date.equals(date2))
+//			return errorJson("非当天数据，禁止录入");
 		TFirstInfoPo firstInfoPo = firstInfoService.getFTFirstInfoPo(new Date(new java.util.Date().getTime()));
 		if (firstInfoPo.getRegiestNum() < regiestNum && historyInfoPo.getRegiestNum() < regiestNum) {
 			historyInfoPo.setRegiestNum(regiestNum);

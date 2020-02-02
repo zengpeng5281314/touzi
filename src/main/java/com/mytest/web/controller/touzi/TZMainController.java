@@ -104,7 +104,7 @@ public class TZMainController extends BaseController {
 				sef = "Bearer " + sef;
 
 				// 起始时间
-				String str = "2020-01-30";
+				String str = "2019-11-01";
 				// 结束时间
 				String str1 = "2020-02-02";
 				Calendar start = Calendar.getInstance();
@@ -126,20 +126,20 @@ public class TZMainController extends BaseController {
 
 					// 首页
 					String fristContent = doGet(
-							"https://api.dsxzt.com/admin/access/v1/statistics/index?pageIndex=0&pageSize=10000&regChannel=ALL&startDate="
+							"https://api.dsxzt.com/admin/access/v1/statistics/index?pageIndex=0&pageSize=20&regChannel=ALL&startDate="
 									+ startTime + "&endDate="+endTime,
 							sef);
 					analyzeDataService.analyzeTFirstInfoPoList(fristContent,dateNo);
-					for (int i = 1; i < 40; i++) {
-						// 会员列表
-						String mebersContent = doGet(
-								"https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex="+i+"&pageSize=50&startDate="
-										+ startTime + "&endDate="+endTime+"&phone=&regChannel=ALL",
-								sef);
-						analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
-						Thread.sleep(100);
-					}
-					
+//					for (int i = 1; i < 40; i++) {
+//						// 会员列表
+//						String mebersContent = doGet(
+//								"https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex="+i+"&pageSize=50&startDate="
+//										+ startTime + "&endDate="+endTime+"&phone=&regChannel=ALL",
+//								sef);
+//						analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
+//						Thread.sleep(100);
+//					}
+//					
 					// 历史数据
 					String historyContent = doGet(
 							"https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate="
@@ -229,7 +229,7 @@ public class TZMainController extends BaseController {
 		for (TFirstInfoPo tFirstInfoPo : list) {
 			tfp.setRegiestNum(tfp.getRegiestNum() + Arith.mulInt(tFirstInfoPo.getRegiestNum(), tFirstInfoPo.getRegiestNumRate()));
 			tfp.setCloseOutNum(tfp.getCloseOutNum() + Arith.mulInt(tFirstInfoPo.getCloseOutNum(), tFirstInfoPo.getCloseOutNumRate()));
-			tfp.setFee(Arith.add(tfp.getFee(), Arith.mul(tFirstInfoPo.getFee(),tFirstInfoPo.getFeeRate())));
+			tfp.setFee(Arith.round(Arith.add(tfp.getFee(), Arith.mul(tFirstInfoPo.getFee(),tFirstInfoPo.getFeeRate())), 0));
 			tfp.setMoneyNum(tfp.getMoneyNum() + Arith.mulInt(tFirstInfoPo.getMoneyNum(),tFirstInfoPo.getMoneyNumRate()));
 			tfp.setRechargeMoney(Arith.add(tfp.getRechargeMoney(), Arith.mul(tFirstInfoPo.getRechargeMoney(),tFirstInfoPo.getRechargeMoneyRate())));
 			tfp.setRechargeNum(tfp.getRechargeNum() + Arith.mulInt(tFirstInfoPo.getRechargeNum(),tFirstInfoPo.getRechargeNumRate()));

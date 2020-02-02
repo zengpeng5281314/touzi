@@ -16,8 +16,10 @@ public class HistoryDTO {
 	private int useTicktNum;
 
 	public void updateRate() {
-		fristRechargeRate = Arith.mul(Arith.div(fristNum, regiestNum, 4), 100);
-		useTicktRate = Arith.mul(Arith.div(useTicktNum, regiestNum, 4),100);
+		if(regiestNum!=0){
+			fristRechargeRate = Arith.mul(Arith.div(fristNum, regiestNum, 4), 100);
+			useTicktRate = Arith.mul(Arith.div(useTicktNum, regiestNum, 4),100);
+		}
 	}
 
 }
