@@ -48,7 +48,7 @@ public class AnalyzeDataService {
 		double rechargeMoney = Double.valueOf(data.getString("rechargeMoney"));
 		int closeOrderCount = data.getInt("closeOrderCount");
 		double totalFee = Double.valueOf(data.getString("totalFee"));
-		double totalProfitLoss = Double.valueOf(data.getString("totalProfitLoss"));
+		double totalProfitLoss = Double.valueOf(data.getString("totalProfitLoss"));//
 		double closeTotalProfitLoss = Double.valueOf(data.getString("closeTotalProfitLoss"));
 		int orderUsers = data.getInt("orderUsers");
 		double orderMoney = Double.valueOf(data.getString("orderMoney"));
@@ -62,8 +62,7 @@ public class AnalyzeDataService {
 			t = list.get(0);
 			if (t.getRegiestNum() < registerCount)
 				t.setRegiestNum(registerCount);
-			if (t.getTicketProfit() < ticketProfitLoss)
-				t.setTicketProfit(ticketProfitLoss);
+			t.setTicketProfit(ticketProfitLoss);
 			if (t.getRechargeNum() < rechargeUsers)
 				t.setRechargeNum(rechargeUsers);
 			if (t.getRechargeMoney() < rechargeMoney)
@@ -72,10 +71,8 @@ public class AnalyzeDataService {
 				t.setCloseOutNum(closeOrderCount);
 			if (t.getFee() < totalFee)
 				t.setFee(totalFee);
-			if (t.getScheduledTotal() < totalProfitLoss)
-				t.setScheduledTotal(totalProfitLoss);
-			if (t.getUnsubscribeTotal() < closeTotalProfitLoss)
-				t.setUnsubscribeTotal(closeTotalProfitLoss);
+			t.setScheduledTotal(totalProfitLoss);
+			t.setUnsubscribeTotal(closeTotalProfitLoss);
 			if (t.getUnsubscribeNum() < orderUsers)
 				t.setUnsubscribeNum(orderUsers);
 			if (t.getUnsubscribeMoney() < orderMoney)

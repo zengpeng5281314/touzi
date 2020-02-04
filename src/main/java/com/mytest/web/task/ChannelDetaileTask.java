@@ -41,7 +41,7 @@ public class ChannelDetaileTask {
 	/**
 	 * 每1分钟执行一次
 	 */
-	@Scheduled(cron = "0 */3 * * * ?")
+	@Scheduled(cron = "0 */2 * * * ?")
 	public void flushChannelDetaile() {
 		List<TXZDownUserInfoPo> list = downLoadUserInfoService.allTXZDownUserInfoPoList(1);
 		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -71,11 +71,22 @@ public class ChannelDetaileTask {
 
 				Calendar start = Calendar.getInstance();
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-				String startTime = format.format(start.getTime());
-				java.sql.Date dateNo = new java.sql.Date(start.getTime().getTime());
-				start.add(Calendar.DAY_OF_MONTH, 1);
-				String endTime = format.format(start.getTime());
+				
+				String startTime = "";
+				String endTime = "";
+				java.sql.Date dateNo = null;
+				if(start.getTime().getHours()>=4){
+					startTime = format.format(start.getTime());
+					dateNo = new java.sql.Date(start.getTime().getTime());
+					start.add(Calendar.DAY_OF_MONTH, 1);
+					endTime = format.format(start.getTime());
+				}else{
+					endTime = format.format(start.getTime());
+					start.add(Calendar.DAY_OF_MONTH, -1);
+					startTime = format.format(start.getTime());
+					dateNo = new java.sql.Date(start.getTime().getTime());
+				}
+				
 
 				// 首页
 				String fristContent = doGet(
@@ -83,10 +94,10 @@ public class ChannelDetaileTask {
 								+ startTime + "&endDate=" + endTime,
 						sef);
 				analyzeDataService.analyzeTFirstInfoPoList(fristContent, dateNo);
-				for (int i = 1; i < 20; i++) {
+				for (int i = 1; i < 3; i++) {
 					// 会员列表
 					String mebersContent = doGet("https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex="
-							+ i + "&pageSize=50&startDate=" + startTime + "&endDate=" + endTime
+							+ i + "&pageSize=20&startDate=" + startTime + "&endDate=" + endTime
 							+ "&phone=&regChannel=ALL", sef);
 					analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
 
@@ -94,7 +105,7 @@ public class ChannelDetaileTask {
 
 				// 历史数据
 				String historyContent = doGet(
-						"https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate="
+						"https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=100&startDate="
 								+ startTime + "&endDate=" + endTime,
 						sef);
 				analyzeDataService.analyzeHistoryInfoPoList(historyContent, dateNo);
@@ -161,13 +172,18 @@ public class ChannelDetaileTask {
 	}
 
 	public static void main(String[] args) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Calendar start1 = Calendar.getInstance();
+		start1.add(Calendar.DAY_OF_MONTH, -1);
+		System.out.println(format.format(start1.getTime()));
+		System.out.println(start1.getTime().getHours());
 		// 起始时间
 		String str = "2019-11-24";
 		// 结束时间
 		String str1 = "2020-01-30";
 		Calendar start = Calendar.getInstance();
 		Calendar end = Calendar.getInstance();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			start.setTime(format.parse(str));
 			end.setTime(format.parse(str1));
