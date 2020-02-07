@@ -83,7 +83,7 @@ public class TZAdminMainController extends BaseController {
 
 		List<TFirstInfoPo> list = (List<TFirstInfoPo>) pageList.getList();
 		for (TFirstInfoPo tFirstInfoPo : list) {
-			tFirstInfoPo.setFee(Arith.round(tFirstInfoPo.getFee(),0));
+			tFirstInfoPo.setFee(Arith.round(tFirstInfoPo.getFee(), 0));
 		}
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
@@ -143,8 +143,8 @@ public class TZAdminMainController extends BaseController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date = sdf.format(new Date(System.currentTimeMillis()));
 		String date2 = sdf.format(firstInfoPo.getDayTime());
-//		if (!date.equals(date2))
-//			return errorJson("非当天数据，禁止录入");
+		// if (!date.equals(date2))
+		// return errorJson("非当天数据，禁止录入");
 
 		THistoryInfoPo historyInfoPo = historyInfoService.getTHistoryInfoPo(new Date(new java.util.Date().getTime()));
 		if (firstInfoPo.getRegiestNum() <= regiestNum && historyInfoPo.getRegiestNum() <= regiestNum) {
@@ -154,8 +154,8 @@ public class TZAdminMainController extends BaseController {
 			firstInfoPo.setRegiestNum(regiestNum);
 			firstInfoPo.setRegiestNumRate(regiestNumRate);
 		}
-		if (firstInfoPo.getTicketProfit() < ticketProfit)
-			firstInfoPo.setTicketProfit(ticketProfit);
+
+		firstInfoPo.setTicketProfit(ticketProfit);
 		if (firstInfoPo.getRechargeNum() < rechargeNum)
 			firstInfoPo.setRechargeNum(rechargeNum);
 		firstInfoPo.setRechargeNumRate(rechargeNumRate);
@@ -168,11 +168,9 @@ public class TZAdminMainController extends BaseController {
 		if (firstInfoPo.getFee() < fee)
 			firstInfoPo.setFee(fee);
 		firstInfoPo.setFeeRate(feeRate);
-		if (firstInfoPo.getScheduledTotal() < scheduledTotal)
-			firstInfoPo.setScheduledTotal(scheduledTotal);
+		firstInfoPo.setScheduledTotal(scheduledTotal);
 		firstInfoPo.setScheduledTotalRate(scheduledTotalRate);
-		if (firstInfoPo.getUnsubscribeTotal() < unsubscribeTotal)
-			firstInfoPo.setUnsubscribeTotal(unsubscribeTotal);
+		firstInfoPo.setUnsubscribeTotal(unsubscribeTotal);
 		firstInfoPo.setUnsubscribeTotalRate(unsubscribeTotalRate);
 		if (firstInfoPo.getUnsubscribeNum() < unsubscribeNum)
 			firstInfoPo.setUnsubscribeNum(unsubscribeNum);
@@ -254,8 +252,8 @@ public class TZAdminMainController extends BaseController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date = sdf.format(new Date(System.currentTimeMillis()));
 		String date2 = sdf.format(historyInfoPo.getDayTime());
-//		if (!date.equals(date2))
-//			return errorJson("非当天数据，禁止录入");
+		// if (!date.equals(date2))
+		// return errorJson("非当天数据，禁止录入");
 		TFirstInfoPo firstInfoPo = firstInfoService.getFTFirstInfoPo(new Date(new java.util.Date().getTime()));
 		if (firstInfoPo.getRegiestNum() < regiestNum && historyInfoPo.getRegiestNum() < regiestNum) {
 			historyInfoPo.setRegiestNum(regiestNum);

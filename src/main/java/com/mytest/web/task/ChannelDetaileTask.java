@@ -75,7 +75,7 @@ public class ChannelDetaileTask {
 				String startTime = "";
 				String endTime = "";
 				java.sql.Date dateNo = null;
-				if(start.getTime().getHours()>=4){
+				if(start.getTime().getHours()>=5){
 					startTime = format.format(start.getTime());
 					dateNo = new java.sql.Date(start.getTime().getTime());
 					start.add(Calendar.DAY_OF_MONTH, 1);
@@ -94,6 +94,12 @@ public class ChannelDetaileTask {
 								+ startTime + "&endDate=" + endTime,
 						sef);
 				analyzeDataService.analyzeTFirstInfoPoList(fristContent, dateNo);
+				// 历史数据
+				String historyContent = doGet(
+						"https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=100&startDate="
+								+ startTime + "&endDate=" + endTime,
+						sef);
+				analyzeDataService.analyzeHistoryInfoPoList(historyContent, dateNo);
 				for (int i = 1; i < 3; i++) {
 					// 会员列表
 					String mebersContent = doGet("https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex="
@@ -103,12 +109,6 @@ public class ChannelDetaileTask {
 
 				}
 
-				// 历史数据
-				String historyContent = doGet(
-						"https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=100&startDate="
-								+ startTime + "&endDate=" + endTime,
-						sef);
-				analyzeDataService.analyzeHistoryInfoPoList(historyContent, dateNo);
 
 				// // 首页
 				// String fristContent = doGet(

@@ -106,9 +106,9 @@ public class TZMainController extends BaseController {
 				sef = "Bearer " + sef;
 
 				// 起始时间
-//				String str = "2020-02-03";
+				str = "2020-02-06";
 				// 结束时间
-//				String str1 = "2020-02-04";
+				str1 = "2020-02-07";
 				Calendar start = Calendar.getInstance();
 				Calendar end = Calendar.getInstance();
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
