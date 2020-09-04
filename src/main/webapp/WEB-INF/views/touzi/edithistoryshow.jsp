@@ -59,7 +59,7 @@
                           <span class="x-red">*</span>注册人数
                       </label>
                       <div class="layui-input-inline">
-                          <input type="text" id="regiestNum" name="regiestNum" disabled="" required="" lay-verify="applicantsNum"
+                          <input type="text" id="regiestNum" name="regiestNum" required="" lay-verify="applicantsNum"
                           autocomplete="off" class="layui-input" value="${historyInfoPo.regiestNum }">
                       </div>
                   </div>

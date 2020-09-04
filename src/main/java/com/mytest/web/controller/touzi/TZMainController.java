@@ -4,6 +4,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -106,9 +107,9 @@ public class TZMainController extends BaseController {
 				sef = "Bearer " + sef;
 
 				// 起始时间
-				str = "2020-02-06";
+				str = "2020-03-20";
 				// 结束时间
-				str1 = "2020-02-07";
+				str1 = "2020-03-21";
 				Calendar start = Calendar.getInstance();
 				Calendar end = Calendar.getInstance();
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -132,22 +133,25 @@ public class TZMainController extends BaseController {
 									+ startTime + "&endDate="+endTime,
 							sef);
 					analyzeDataService.analyzeTFirstInfoPoList(fristContent,dateNo);
-//					for (int i = 1; i < 40; i++) {
-//						// 会员列表
-//						String mebersContent = doGet(
-//								"https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex="+i+"&pageSize=50&startDate="
-//										+ startTime + "&endDate="+endTime+"&phone=&regChannel=ALL",
-//								sef);
-//						analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
-//						Thread.sleep(100);
-//					}
-//					
+					
 					// 历史数据
 					String historyContent = doGet(
 							"https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate="
 									+ startTime + "&endDate="+endTime,
 							sef);
 					analyzeDataService.analyzeHistoryInfoPoList(historyContent,dateNo);
+					
+					for (int i = 1; i < 40; i++) {
+						// 会员列表
+						String mebersContent = doGet(
+								"https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex="+i+"&pageSize=50&startDate="
+										+ startTime + "&endDate="+endTime+"&phone=&regChannel=ALL",
+								sef);
+						analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
+						Thread.sleep(100);
+					}
+//					
+					
 				}
 
 				driver.quit();
@@ -200,7 +204,7 @@ public class TZMainController extends BaseController {
 			@RequestParam(defaultValue = "", required = false, value = "startTime") String startTime,
 			@RequestParam(defaultValue = "", required = false, value = "endTime") String endTime,
 			@RequestParam(defaultValue = "1", required = false, value = "currentPage") int currentPage,
-			@RequestParam(defaultValue = "50", required = false, value = "pageSize") int pageSize,
+			@RequestParam(defaultValue = "500", required = false, value = "pageSize") int pageSize,
 			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
 		TUserInfoPo userInfoPo = (TUserInfoPo) request.getAttribute("adminInfo");
 //		if(userInfoPo==null)
@@ -225,7 +229,6 @@ public class TZMainController extends BaseController {
 		Page page = new Page(currentPage, pageSize);
 
 		Page pageList = firstInfoService.pageFirstInfoPo(startT, endT, page);
-
 		List<TFirstInfoPo> list = (List<TFirstInfoPo>) pageList.getList();
 		TFirstInfoPo tfp = new TFirstInfoPo();
 		for (TFirstInfoPo tFirstInfoPo : list) {
@@ -235,11 +238,11 @@ public class TZMainController extends BaseController {
 			tfp.setMoneyNum(tfp.getMoneyNum() + Arith.mulInt(tFirstInfoPo.getMoneyNum(),tFirstInfoPo.getMoneyNumRate()));
 			tfp.setRechargeMoney(Arith.add(tfp.getRechargeMoney(), Arith.mul(tFirstInfoPo.getRechargeMoney(),tFirstInfoPo.getRechargeMoneyRate())));
 			tfp.setRechargeNum(tfp.getRechargeNum() + Arith.mulInt(tFirstInfoPo.getRechargeNum(),tFirstInfoPo.getRechargeNumRate()));
-			tfp.setScheduledTotal(Arith.add(tfp.getScheduledTotal(), Arith.mul(tFirstInfoPo.getScheduledTotal(),tFirstInfoPo.getScheduledTotalRate())));
+			tfp.setScheduledTotal(Arith.round(Arith.add(tfp.getScheduledTotal(), Arith.mul(tFirstInfoPo.getScheduledTotal(),tFirstInfoPo.getScheduledTotalRate())),2));
 			tfp.setTicketProfit(Arith.add(tfp.getTicketProfit(), tFirstInfoPo.getTicketProfit()));
 			tfp.setUnsubscribeMoney(Arith.add(tfp.getUnsubscribeMoney(), Arith.mul(tFirstInfoPo.getUnsubscribeMoney(),tFirstInfoPo.getUnsubscribeMoneyRate())));
 			tfp.setUnsubscribeNum(tfp.getUnsubscribeNum() + Arith.mulInt(tFirstInfoPo.getUnsubscribeNum(),tFirstInfoPo.getUnsubscribeNumRate()));
-			tfp.setUnsubscribeTotal(Arith.add(tfp.getUnsubscribeTotal(), Arith.mul(tFirstInfoPo.getUnsubscribeTotal(),tFirstInfoPo.getUnsubscribeTotalRate())));
+			tfp.setUnsubscribeTotal(Arith.round(Arith.add(tfp.getUnsubscribeTotal(), Arith.mul(tFirstInfoPo.getUnsubscribeTotal(),tFirstInfoPo.getUnsubscribeTotalRate())),2));
 		}
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Timestamp.class, new JsonDateValueProcessor("yyyy-MM-dd"));
