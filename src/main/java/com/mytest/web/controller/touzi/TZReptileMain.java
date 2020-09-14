@@ -50,14 +50,14 @@ public class TZReptileMain {
 			sef = "Bearer " + sef;
 
 			// 首页
-			doGet("https://api.dsxzt.com/admin/access/v1/statistics/index?pageIndex=0&pageSize=10000&regChannel=ALL&startDate=&endDate=",
+			doGet("http://47.102.51.23/admin/access/v1/statistics/index?pageIndex=0&pageSize=10000&regChannel=ALL&startDate=&endDate=",
 					sef);
 			// 会员列表
-			doGet("https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex=1&pageSize=10000&startDate=&endDate=&phone=&regChannel=ALL",
+			doGet("http://47.102.51.23/admin/access/v1/statistics/userlist?pageIndex=1&pageSize=10000&startDate=&endDate=&phone=&regChannel=ALL",
 					sef);
 
 			// 历史数据
-			doGet("https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate=&endDate=",
+			doGet("http://47.102.51.23/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate=&endDate=",
 					sef);
 
 			driver.quit();

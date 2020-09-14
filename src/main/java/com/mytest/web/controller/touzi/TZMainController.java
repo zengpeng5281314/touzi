@@ -107,9 +107,9 @@ public class TZMainController extends BaseController {
 				sef = "Bearer " + sef;
 
 				// 起始时间
-				str = "2020-03-20";
+				str = "2020-09-10";
 				// 结束时间
-				str1 = "2020-03-21";
+				str1 = "2020-09-14";
 				Calendar start = Calendar.getInstance();
 				Calendar end = Calendar.getInstance();
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -129,14 +129,14 @@ public class TZMainController extends BaseController {
 
 					// 首页
 					String fristContent = doGet(
-							"https://api.dsxzt.com/admin/access/v1/statistics/index?pageIndex=0&pageSize=20&regChannel=ALL&startDate="
+							"http://47.102.51.23/admin/access/v1/statistics/index?pageIndex=0&pageSize=20&regChannel=ALL&startDate="
 									+ startTime + "&endDate="+endTime,
 							sef);
 					analyzeDataService.analyzeTFirstInfoPoList(fristContent,dateNo);
 					
 					// 历史数据
 					String historyContent = doGet(
-							"https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate="
+							"http://47.102.51.23/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate="
 									+ startTime + "&endDate="+endTime,
 							sef);
 					analyzeDataService.analyzeHistoryInfoPoList(historyContent,dateNo);
@@ -144,7 +144,7 @@ public class TZMainController extends BaseController {
 					for (int i = 1; i < 40; i++) {
 						// 会员列表
 						String mebersContent = doGet(
-								"https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex="+i+"&pageSize=50&startDate="
+								"http://47.102.51.23/admin/access/v1/statistics/userlist?pageIndex="+i+"&pageSize=50&startDate="
 										+ startTime + "&endDate="+endTime+"&phone=&regChannel=ALL",
 								sef);
 						analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);

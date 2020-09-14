@@ -90,19 +90,19 @@ public class ChannelDetaileTask {
 
 				// 首页
 				String fristContent = doGet(
-						"https://api.dsxzt.com/admin/access/v1/statistics/index?pageIndex=0&pageSize=10000&regChannel=ALL&startDate="
+						"http://47.102.51.23/admin/access/v1/statistics/index?pageIndex=0&pageSize=10000&regChannel=ALL&startDate="
 								+ startTime + "&endDate=" + endTime,
 						sef);
 				analyzeDataService.analyzeTFirstInfoPoList(fristContent, dateNo);
 				// 历史数据
 				String historyContent = doGet(
-						"https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=100&startDate="
+						"http://47.102.51.23/admin/access/v1/statistics/history?pageIndex=1&pageSize=100&startDate="
 								+ startTime + "&endDate=" + endTime,
 						sef);
 				analyzeDataService.analyzeHistoryInfoPoList(historyContent, dateNo);
 				for (int i = 1; i < 3; i++) {
 					// 会员列表
-					String mebersContent = doGet("https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex="
+					String mebersContent = doGet("http://47.102.51.23/admin/access/v1/statistics/userlist?pageIndex="
 							+ i + "&pageSize=20&startDate=" + startTime + "&endDate=" + endTime
 							+ "&phone=&regChannel=ALL", sef);
 					analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
@@ -112,20 +112,20 @@ public class ChannelDetaileTask {
 
 				// // 首页
 				// String fristContent = doGet(
-				// "https://api.dsxzt.com/admin/access/v1/statistics/index?pageIndex=0&pageSize=10000&regChannel=ALL&startDate="
+				// "http://47.102.51.23/admin/access/v1/statistics/index?pageIndex=0&pageSize=10000&regChannel=ALL&startDate="
 				// + date + "&endDate=",
 				// sef);
 				// analyzeDataService.analyzeTFirstInfoPoList(fristContent);
 				// // 会员列表
 				// String mebersContent = doGet(
-				// "https://api.dsxzt.com/admin/access/v1/statistics/userlist?pageIndex=1&pageSize=100&startDate="
+				// "http://47.102.51.23/admin/access/v1/statistics/userlist?pageIndex=1&pageSize=100&startDate="
 				// + date + "&endDate=&phone=&regChannel=ALL",
 				// sef);
 				// analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
 				//
 				// // 历史数据
 				// String historyContent = doGet(
-				// "https://api.dsxzt.com/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate="
+				// "http://47.102.51.23/admin/access/v1/statistics/history?pageIndex=1&pageSize=10000&startDate="
 				// + date + "&endDate=",
 				// sef);
 				// analyzeDataService.analyzeHistoryInfoPoList(historyContent);
