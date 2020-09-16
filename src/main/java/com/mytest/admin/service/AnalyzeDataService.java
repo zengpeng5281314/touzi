@@ -1,8 +1,11 @@
 package com.mytest.admin.service;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -206,12 +209,61 @@ public class AnalyzeDataService {
 			historyInfoPo.setFristNum(rechargeUsers);
 		if (historyInfoPo.getRegiestNum() < registerCount)
 			historyInfoPo.setRegiestNum(registerCount);
+		String format = "HH:mm:ss";
+		try {
+			java.util.Date now = new java.util.Date();
+			DateFormat dateFormat = DateFormat.getTimeInstance();// 获取时分秒
+			// 得到当前时间的时分秒
+			String nowStr = dateFormat.format(now);
+			java.util.Date nowTime = new SimpleDateFormat(format).parse(nowStr);
+			java.util.Date startTime = new SimpleDateFormat(format).parse("05:00:00");
+			java.util.Date endTime = new SimpleDateFormat(format).parse("05:30:00");
+			//如当前时间在5-6点之间，则直接覆盖注册人数
+			if (isEffectiveDate(nowTime, startTime, endTime))
+				historyInfoPo.setRegiestNum(registerCount);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 		historyInfoPo.setRegiestNumRate(1.00d);
 		if (historyInfoPo.getUseTicktNum() < ticketUsers)
 			historyInfoPo.setUseTicktNum(ticketUsers);
 
 		mBeanDAO.saveOrUpdate(historyInfoPo);
 
+	}
+
+	/**
+	 * 判断当前时间是否在[startTime, endTime]区间，注意时间格式要一致
+	 * 
+	 * @param nowTime
+	 *            当前时间
+	 * @param startTime
+	 *            开始时间
+	 * @param endTime
+	 *            结束时间
+	 * @return
+	 * @author jqlin
+	 */
+	public static boolean isEffectiveDate(java.util.Date nowTime, java.util.Date startTime, java.util.Date endTime) {
+		if (nowTime.getTime() == startTime.getTime() || nowTime.getTime() == endTime.getTime()) {
+			return true;
+		}
+
+		Calendar date = Calendar.getInstance();
+		date.setTime(nowTime);
+
+		Calendar begin = Calendar.getInstance();
+		begin.setTime(startTime);
+
+		Calendar end = Calendar.getInstance();
+		end.setTime(endTime);
+
+		if (date.after(begin) && date.before(end)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
