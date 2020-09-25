@@ -45,6 +45,7 @@ public class UserInfoController extends BaseController {
 				String sef = URLEncoder.encode(JSON.toJSONString(adminInfo), "utf-8");
 				// 声明cookie
 				autoCookie = new Cookie("adminInfo", sef);
+				autoCookie.setMaxAge(5);//秒
 				response.addCookie(autoCookie);
 				return new ModelAndView("redirect:/admin/index");
 			} else {
@@ -67,6 +68,7 @@ public class UserInfoController extends BaseController {
 			String sef = URLEncoder.encode(JSON.toJSONString(adminInfo), "utf-8");
 			// 声明cookie
 			autoCookie = new Cookie("adminInfo", sef);
+			autoCookie.setMaxAge(60*60*24*31);//秒
 			response.addCookie(autoCookie);
 			return successJson("登录成功", null);
 		} else {

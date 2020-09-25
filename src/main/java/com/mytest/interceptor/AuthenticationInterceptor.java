@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.google.gson.JsonObject;
 import com.mytest.admin.po.TUserInfoPo;
+import com.mytest.admin.service.UserInfoService;
 import com.mytest.utils.WebUtils;
 
 /**
@@ -48,6 +49,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		this.excludedUrls = excludedUrls;
 	}
 	
+	@Autowired
+	private UserInfoService userInfoService;
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -108,7 +111,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 return true;            
             }
         }
-        /*
+        
 		Cookie[] cookies = request.getCookies();
 		boolean isLogin = false;
 		if (null != cookies) {
@@ -119,9 +122,14 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 					if (adminInfo == null) {
 						isLogin = false;
 					} else {
-						request.setAttribute("adminInfo", adminInfo);
-						isLogin = true;
-						break;
+						if(userInfoService.pwdIsTrue(adminInfo.getId(), adminInfo.getPassword())){
+							request.setAttribute("adminInfo", adminInfo);
+							isLogin = true;
+							break;
+						}else{
+							isLogin = false;
+						}
+						
 					}
 				}else{
 					isLogin = false;
@@ -134,8 +142,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 			response.sendRedirect(request.getContextPath() + "/login");
 		
 		return isLogin;
-		*/
-        return true;
+		
+//        return true;
 	}
 
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,

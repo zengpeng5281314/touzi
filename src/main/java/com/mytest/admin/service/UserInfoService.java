@@ -18,6 +18,13 @@ public class UserInfoService {
 	@Autowired
 	MFrameworkService mFrameworkService;
 
+	public boolean pwdIsTrue(long id, String password) {
+		TUserInfoPo userInfoPo = mFrameworkService.get(TUserInfoPo.class, String.valueOf(id));
+		if (userInfoPo != null && userInfoPo.getPassword().equals(password))
+			return true;
+		return false;
+	}
+
 	public TUserInfoPo getTUserInfoPoByOpenId(String nickname, String password) {
 		MParam mparam = new MParam();
 		mparam.add("password", password);
@@ -27,9 +34,9 @@ public class UserInfoService {
 		return mFrameworkService.get(TUserInfoPo.class, mparam);
 	}
 
-	public List<TUserInfoPo> allUserInfoPo(){
+	public List<TUserInfoPo> allUserInfoPo() {
 		MParam mparam = new MParam();
 		mparam.add("status", 1);
-		return mFrameworkService.listAll(TUserInfoPo.class,mparam);
+		return mFrameworkService.listAll(TUserInfoPo.class, mparam);
 	}
 }
