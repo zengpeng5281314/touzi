@@ -141,12 +141,12 @@ public class TZAdminMainController extends BaseController {
 		if (firstInfoPo == null)
 			return errorJson("信息有误！请退出后重试");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String date = sdf.format(new Date(System.currentTimeMillis()));
-		String date2 = sdf.format(firstInfoPo.getDayTime());
+//		String date = sdf.format(new Date(System.currentTimeMillis()));
+//		String date2 = sdf.format(firstInfoPo.getDayTime());
 		// if (!date.equals(date2))
 		// return errorJson("非当天数据，禁止录入");
 
-		THistoryInfoPo historyInfoPo = historyInfoService.getTHistoryInfoPo(new Date(new java.util.Date().getTime()));
+		THistoryInfoPo historyInfoPo = historyInfoService.getTHistoryInfoPo(firstInfoPo.getDayTime());
 		if (firstInfoPo.getRegiestNum() <= regiestNum && historyInfoPo.getRegiestNum() <= regiestNum) {
 			historyInfoPo.setRegiestNum(regiestNum);
 			historyInfoPo.setRegiestNumRate(regiestNumRate);
@@ -254,7 +254,7 @@ public class TZAdminMainController extends BaseController {
 		String date2 = sdf.format(historyInfoPo.getDayTime());
 		// if (!date.equals(date2))
 		// return errorJson("非当天数据，禁止录入");
-		TFirstInfoPo firstInfoPo = firstInfoService.getFTFirstInfoPo(new Date(new java.util.Date().getTime()));
+		TFirstInfoPo firstInfoPo = firstInfoService.getFTFirstInfoPo(historyInfoPo.getDayTime());
 		if (firstInfoPo.getRegiestNum() < regiestNum && historyInfoPo.getRegiestNum() < regiestNum) {
 			historyInfoPo.setRegiestNum(regiestNum);
 			firstInfoPo.setRegiestNum(regiestNum);
