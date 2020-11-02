@@ -52,14 +52,15 @@ public class ChannelDetaileTask {
 			// DesiredCapabilities caps = setDownloadsPath();// 更改默认下载路径
 			// WebDriver driver = new ChromeDriver(caps);
 			WebDriver driver = new ChromeDriver();
-			driver.get(txzDownUserInfoPo.getAddress());
-			WebElement loginName = driver
-					.findElement(By.xpath("//*[@id=\"app\"]/div/div[1]/div/div[1]/div[2]/div/input"));
-			loginName.sendKeys(txzDownUserInfoPo.getUserName());
-			WebElement loginPwd = driver
-					.findElement(By.xpath("//*[@id=\"app\"]/div/div[1]/div/div[2]/div[2]/div/input"));
-			loginPwd.sendKeys(txzDownUserInfoPo.getUserPwd());
 			try {
+				driver.get(txzDownUserInfoPo.getAddress());
+				WebElement loginName = driver
+						.findElement(By.xpath("//*[@id=\"app\"]/div/div[1]/div/div[1]/div[2]/div/input"));
+				loginName.sendKeys(txzDownUserInfoPo.getUserName());
+				WebElement loginPwd = driver
+						.findElement(By.xpath("//*[@id=\"app\"]/div/div[1]/div/div[2]/div[2]/div/input"));
+				loginPwd.sendKeys(txzDownUserInfoPo.getUserPwd());
+
 				WebElement loginBtn = driver.findElement(By.xpath("//*[@id=\"app\"]/div/div[2]/div/button"));
 				loginBtn.click();
 				Thread.sleep(1000);
@@ -71,22 +72,21 @@ public class ChannelDetaileTask {
 
 				Calendar start = Calendar.getInstance();
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-				
+
 				String startTime = "";
 				String endTime = "";
 				java.sql.Date dateNo = null;
-				if(start.getTime().getHours()>=5){
+				if (start.getTime().getHours() >= 5) {
 					startTime = format.format(start.getTime());
 					dateNo = new java.sql.Date(start.getTime().getTime());
 					start.add(Calendar.DAY_OF_MONTH, 1);
 					endTime = format.format(start.getTime());
-				}else{
+				} else {
 					endTime = format.format(start.getTime());
 					start.add(Calendar.DAY_OF_MONTH, -1);
 					startTime = format.format(start.getTime());
 					dateNo = new java.sql.Date(start.getTime().getTime());
 				}
-				
 
 				// 首页
 				String fristContent = doGet(
@@ -108,7 +108,6 @@ public class ChannelDetaileTask {
 					analyzeDataService.analyzeTRegistUserInfoPoList(mebersContent);
 
 				}
-
 
 				// // 首页
 				// String fristContent = doGet(
@@ -173,7 +172,7 @@ public class ChannelDetaileTask {
 
 	public static void main(String[] args) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		Calendar start1 = Calendar.getInstance();
 		start1.add(Calendar.DAY_OF_MONTH, -1);
 		System.out.println(format.format(start1.getTime()));
