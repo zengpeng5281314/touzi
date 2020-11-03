@@ -125,6 +125,50 @@ public class AnalyzeDataService {
 		}
 
 	}
+	
+	public void saveTFirstInfoPo(Date  dayTime){
+		MParam mparam = new MParam();
+		mparam.add("status", 1);
+		mparam.add("dayTime", dayTime);
+		List<TFirstInfoPo> list = mFrameworkService.list(TFirstInfoPo.class, mparam);
+		TFirstInfoPo t = null;
+		if (list != null && list.size() > 0) {
+			
+		}else{
+			t = new TFirstInfoPo();
+			t.setRegiestNumRate(1.00d);
+			t.setDayTime(dayTime);
+			t.setRechargeNumRate(1.00d);
+			t.setRechargeMoneyRate(1.00d);
+			t.setCloseOutNumRate(1.00d);
+			t.setFeeRate(1.00d);
+			t.setScheduledTotalRate(1.00d);
+			t.setUnsubscribeTotalRate(1.00d);
+			t.setUnsubscribeNumRate(1.00d);
+			t.setUnsubscribeMoneyRate(1.00d);
+			t.setMoneyNumRate(1.00d);
+			t.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			t.setStatus(1);
+			mBeanDAO.saveOrUpdate(t);
+		}
+	}
+	
+	public void saveTHistoryInfoPo( Date  dayTime){
+		MParam mparam = new MParam();
+		mparam.add("status", 1);
+		mparam.add("dayTime", dayTime);
+		List<THistoryInfoPo> listTHistoryInfoPo = mFrameworkService.list(THistoryInfoPo.class, mparam);
+		THistoryInfoPo historyInfoPo = null;
+		if (listTHistoryInfoPo != null && listTHistoryInfoPo.size() > 0) {
+		}else{
+			historyInfoPo = new THistoryInfoPo();
+			historyInfoPo.setDayTime(dayTime);
+			historyInfoPo.setRegiestNumRate(1.00d);
+			historyInfoPo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			historyInfoPo.setStatus(1);
+			mBeanDAO.saveOrUpdate(historyInfoPo);
+		}
+	}
 
 	public void analyzeTRegistUserInfoPoList(String registContent) {
 		JsonConfig jsonConfig = new JsonConfig();
