@@ -18,16 +18,16 @@ public class ChannelDetaileTask2 {
 	@Autowired
 	private AnalyzeDataService analyzeDataService;
 
-	/**
-	 * 每天凌晨1点执行一次
-	 */
-	@Scheduled(cron = "0 0 1 * * ?")
-	public void flushChannelDetaile() {
-		Calendar start = Calendar.getInstance();
-		java.sql.Date dateNo = new java.sql.Date(start.getTime().getTime());
-		analyzeDataService.saveTFirstInfoPo(dateNo);
-		analyzeDataService.saveTHistoryInfoPo(dateNo);
-
-	}
+//	/**
+//	 * 每天凌晨1点执行一次
+//	 */
+//	@Scheduled(cron = "0 0 1 * * ?")
+//	public void flushChannelDetaile() {
+//		Calendar start = Calendar.getInstance();
+//		java.sql.Date dateNo = new java.sql.Date(start.getTime().getTime());
+//		analyzeDataService.saveTFirstInfoPo(dateNo);
+//		analyzeDataService.saveTHistoryInfoPo(dateNo);
+//
+//	}
 
 }
